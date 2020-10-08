@@ -27,8 +27,7 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
   subscriberRequest:{
-    type:subscriberRequestSchema,
-    required:true
+    type:subscriberRequestSchema
   },
   createdAt:{ 
     type : Date, 
