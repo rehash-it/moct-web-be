@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const galleryTypeSchema = require('./lookup');
 const eventTypeSchema = require('./event');
 const tagSchema = require('./lookup');
-const galleryCategorySchema = require('./lookup');
+const galleryCategorySchema = require('./gallery_category');
 const { boolean } = require('joi');
 const gallerySchema = new mongoose.Schema({
   type: {
@@ -27,7 +27,7 @@ const gallerySchema = new mongoose.Schema({
      required: true,
   },
   tags:{
-    type:[tagSchema],
+    type:[String],
   },
   category:{
       type: galleryCategorySchema,

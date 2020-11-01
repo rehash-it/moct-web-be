@@ -7,6 +7,7 @@ const authController=require('../controllers/auth-controller');
 const userController=require('../controllers/user-controller');
 const contactInfoController = require('../controllers/contactInfo-controller');
 const galleryCategoryController = require('../controllers/gallery-category-conroller');
+const galleryController = require('../controllers/gallery-controller');
 const error=require('../middleware/error');
 var cors = require('cors')
 
@@ -18,16 +19,21 @@ app.use('/api',router.get('/me', auth,asyncMiddleware(userController.getUser)));
 
 app.use('/api',router.post('/user', asyncMiddleware(userController.createUser)));
 
-app.use('/api',router.all('/contactInfo', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-   }));
-   app.use('/api',router.all('/galleryCategory', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-   }));
+// app.use('/api',router.all('/contactInfo', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next();
+//    }));
+// app.use('/api',router.all('/galleryCategory', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next();
+//    }));
+// app.use('/api',router.all('/gallery', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next();
+//    }));
 app.use('/api',router.post('/contactInfo', asyncMiddleware(contactInfoController.createContactInfo)));
 app.use('/api',router.get('/contactInfo', asyncMiddleware(contactInfoController.getContactInfo)));
 app.use('/api',router.put('/contactInfo', asyncMiddleware(contactInfoController.updateContactInfo)));
@@ -38,6 +44,10 @@ app.use('/api',router.get('/galleryCategory', cors(),asyncMiddleware(galleryCate
 app.use('/api',router.put('/galleryCategory', cors(),asyncMiddleware(galleryCategoryController.updateGalleryCategory)));
 app.use('/api',router.delete('/galleryCategory', cors(),asyncMiddleware(galleryCategoryController.deleteGalleryCategory)));
 
+app.use('/api',router.post('/gallery', cors(),asyncMiddleware(galleryController.createGallery)));
+app.use('/api',router.get('/gallery', cors(),asyncMiddleware(galleryController.getGallery)));
+app.use('/api',router.put('/gallery', cors(),asyncMiddleware(galleryController.updateGallery)));
+app.use('/api',router.delete('/gallery', cors(),asyncMiddleware(galleryController.deleteGallery)));
 app.use(error);
 }
 
