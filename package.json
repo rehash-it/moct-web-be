@@ -16,6 +16,7 @@
   "homepage": "https://bitbucket.org/r_abdubler/tourgallery_be#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "joi": "^17.2.1",
     "joi-objectid": "^3.0.1",
