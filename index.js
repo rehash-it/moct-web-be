@@ -4,12 +4,13 @@ Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
-// var cors = require('cors')
+var cors = require('cors')
 // var corsOptions = {
 //   origin: '*',
 //   optionsSuccessStatus: 200,
 // }
 // app.use(cors(corsOptions));
+app.use(cors());
 require('./routes/index')(app);
 
 
