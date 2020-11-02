@@ -40,7 +40,7 @@ exports.createGallery =async (req, res) => {
         eventType:eventType,
         istangible:req.body.istangible,
         tags:tags,
-        category:category,
+        category:req.body.categoryId,
         capturedYear:req.body.capturedYear,
     });
     gallery = await gallery.save();
@@ -67,4 +67,13 @@ exports.deleteGallery =async (req, res) => {
     if (!gallery) return res.status(404).send('The Gallery  with the given ID was not found.');
   
     res.send(gallery);
+};
+
+exports.geteGalleryByCategory = async (req, res) => {
+    const gallery= await Gallery.find({"category": req.params.id}).select({ });
+  
+    if (!gallery) return res.status(404).send('The Gallery with the given ID was not found.');
+  
+    res.send(gallery);
+
 };
