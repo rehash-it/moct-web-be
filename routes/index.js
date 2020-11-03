@@ -30,13 +30,13 @@ app.use('/api',router.delete('/contactInfo/:id', asyncMiddleware(contactInfoCont
 
 app.use('/api',router.post('/galleryCategory',asyncMiddleware(galleryCategoryController.createGalleryCategory)));
 app.use('/api',router.get('/galleryCategory',asyncMiddleware(galleryCategoryController.getGalleryCategory)));
-app.use('/api',router.get('/galleryCategory/:id',asyncMiddleware(galleryCategoryController.getGalleryCategory)));
+app.use('/api',router.get('/galleryCategory/:id',asyncMiddleware(galleryCategoryController.getGalleryCategoryById)));
 app.use('/api',router.put('/galleryCategory/:id',asyncMiddleware(galleryCategoryController.updateGalleryCategory)));
 app.use('/api',router.delete('/galleryCategory/:id',asyncMiddleware(galleryCategoryController.deleteGalleryCategory)));
 
 app.use('/api',router.post('/gallery',asyncMiddleware(galleryController.createGallery)));
 app.use('/api',router.get('/gallery',asyncMiddleware(galleryController.getGallery)));
-app.use('/api',router.get('/galleryByCategory/:id',asyncMiddleware(galleryController.geteGalleryByCategory)));
+app.use('/api',router.get('/galleryByCategory/:id',asyncMiddleware(galleryController.getGalleryByCategory)));
 app.use('/api',router.put('/gallery/:id',asyncMiddleware(galleryController.updateGallery)));
 app.use('/api',router.delete('/gallery/:id',asyncMiddleware(galleryController.deleteGallery)));
 
