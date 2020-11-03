@@ -25,8 +25,15 @@ exports.createEvent =async (req, res) => {
 exports.updateEvent = async (req, res) => {
     const { error } = validateEvent(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
-  
-    const event = await Event.findByIdAndUpdate(req.params.id, { description: req.body.description,type:req.body.type }, {
+    
+    const location= await Lookup.findById(req.body.locationId);
+    if(!location) return res.status(400).send('Invalid Location');
+
+    const event = await Event.findByIdAndUpdate(req.params.id, { 
+        description: req.body.description,
+        location:location,
+        eventyear:req.body.eventyear
+    }, {
       new: true
     });
   

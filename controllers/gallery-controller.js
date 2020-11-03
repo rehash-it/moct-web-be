@@ -51,7 +51,37 @@ exports.updateGallery = async (req, res) => {
     const { error } = validateGallery(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
   
-    const gallery = await Gallery.findByIdAndUpdate(req.params.id, { description: req.body.description,fileurl:req.body.fileurl }, {
+    const category= await GalleryCategory.findById(req.body.categoryId);
+    if(!category) return res.status(400).send('Invalid Category');
+  
+
+    const type= await Lookup.findById(req.body.typeId);
+    if(!type) return res.status(400).send('Invalid Type');
+
+    const eventType= await Event.findById(req.body.eventTypeId);
+    if(!eventType) return res.status(400).send('Invalid Event Type');
+
+ 
+    let tags=[];
+    for (let i=0;i<req.body.tags.length;i++){
+      let result= await Lookup.findById(req.body.tags[i]);
+      if(!result){
+        return res.status(400).send('Invalid Tag');
+      } else{     
+        tags.push(result.description);
+      }
+    }
+    
+    const gallery = await Gallery.findByIdAndUpdate(req.params.id, { 
+      description: req.body.description,
+      fileurl:req.body.fileurl,
+      type:type,
+      eventType:eventType,
+      istangible:req.body.istangible,
+      tags:tags,
+      category:req.body.categoryId,
+      capturedYear:req.body.capturedYear,
+    }, {
       new: true
     });
   
