@@ -30,6 +30,7 @@ app.use('/api',router.delete('/contactInfo/:id', asyncMiddleware(contactInfoCont
 
 app.use('/api',router.post('/galleryCategory',asyncMiddleware(galleryCategoryController.createGalleryCategory)));
 app.use('/api',router.get('/galleryCategory',asyncMiddleware(galleryCategoryController.getGalleryCategory)));
+app.use('/api',router.get('/galleryCategory/:id',asyncMiddleware(galleryCategoryController.getGalleryCategory)));
 app.use('/api',router.put('/galleryCategory/:id',asyncMiddleware(galleryCategoryController.updateGalleryCategory)));
 app.use('/api',router.delete('/galleryCategory/:id',asyncMiddleware(galleryCategoryController.deleteGalleryCategory)));
 
