@@ -17,6 +17,13 @@ var cors = require('cors')
 
 module.exports=function(app){
 app.use(express.json());
+
+app.use('/api',router.all('/galleryCategory', function(req, res, next) {
+res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Headers", "X-Requested-With");
+next();
+}));
+
 app.use('/api', router.post('/auth', asyncMiddleware(authController.auth)));
 
 app.use('/api',router.get('/me', auth,asyncMiddleware(userController.getUser)));
