@@ -22,7 +22,7 @@ function validateEvent(event) {
   const schema = Joi.object({
     description: Joi.string().min(8).required(),
     locationId:Joi.string().required(),
-    eventyear:Joi.date().format('YYYY')
+    eventyear:Joi.date()
   });
   const validation = schema.validate(event);
   return validation;
