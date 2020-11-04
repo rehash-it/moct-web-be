@@ -24,6 +24,36 @@ res.header("Access-Control-Allow-Headers", "X-Requested-With");
 next();
 }));
 
+app.use('/api',router.all('/auth', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
+app.use('/api',router.all('/me', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
+app.use('/api',router.all('/user', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
+app.use('/api',router.all('/contactinfo', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
+app.use('/api',router.all('/gallery', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
 app.use('/api', router.post('/auth', asyncMiddleware(authController.auth)));
 
 app.use('/api',router.get('/me', auth,asyncMiddleware(userController.getUser)));
