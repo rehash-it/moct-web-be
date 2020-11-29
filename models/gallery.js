@@ -24,7 +24,8 @@ const gallerySchema = new mongoose.Schema({
   },
   views: {
     type: Number,
-    required: false
+    required: false,
+    default: 0
   },
   istangible: {
     type: Boolean,
