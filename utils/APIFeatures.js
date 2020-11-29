@@ -22,7 +22,7 @@ class APIFeatures {
         const sortBy = this.queryString.sort.split(',').join(' ');
         this.query = this.query.sort(sortBy);
       } else {
-        this.query = this.query.sort('-createdAt');
+        this.query = this.query.sort('createdAt');
       }
   
       return this;
@@ -41,7 +41,7 @@ class APIFeatures {
   
     paginate() {
       const page = this.queryString.page * 1 || 1;
-      const limit = this.queryString.limit * 1 || 10;
+      const limit = this.queryString.limit * 1 || 10;// default: 10 results per page at a time
       const skip = (page - 1) * limit;
   
       this.query = this.query.skip(skip).limit(limit);
