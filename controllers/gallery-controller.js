@@ -13,7 +13,14 @@ exports.getGallery = async (req, res) => {
       .limitFields()
       .paginate();
     const galleries = await apiFeatures.query;
-    res.send(galleries);
+
+    res.status(200).json({
+      status: 'success',
+      results: galleries.length,
+      data: {
+        galleries
+      }
+    });
   } catch (err) {
     res.status(404).json({
       status: 'fail',
