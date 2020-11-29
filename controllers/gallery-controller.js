@@ -3,10 +3,29 @@ const {Gallery, validateGallery} = require('../models/gallery');
 const {GalleryCategory, validateGalleryCategory} = require('../models/gallery_category');
 const {Lookup,validateLookup} = require('../models/lookup');
 const {Event,validateEvent} = require('../models/event');
-exports.getGallery =async (req, res) => {
-    const gallery = await Gallery.find().sort('description');
-    res.send(gallery);
+const APIFeatures = require('./../utils/APIFeatures');
+
+exports.getGallery = async (req, res) => {
+  try {
+    const apiFeatures = new APIFeatures(Gallery.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const galleries = await apiFeatures.query;
+    res.send(galleries);
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err
+    });
+  }
 };
+
+// exports.getGallery =async (req, res) => {
+//     const gallery = await Gallery.find().sort('description');
+//     res.send(gallery);
+// };
 
 exports.createGallery =async (req, res) => {
     const { error } = validateGallery(req.body); 
