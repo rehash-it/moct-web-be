@@ -16,7 +16,6 @@ exports.getGallery = async (req, res) => {
     res.status(200).send(galleries);
   } catch (err) {
     res.status(404).json({
-      status: 'fail',
       message: err
     });
   }
