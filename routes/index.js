@@ -36,6 +36,7 @@ app.use('/api',router.delete('/galleryCategory/:id',asyncMiddleware(galleryCateg
 
 app.use('/api',router.post('/gallery',asyncMiddleware(galleryController.createGallery)));
 app.use('/api',router.get('/gallery',asyncMiddleware(galleryController.getGallery)));
+app.use('/api',router.get('/galleries',asyncMiddleware(galleryController.getGalleries)));
 app.use('/api',router.get('/galleryByCategory/:id',asyncMiddleware(galleryController.getGalleryByCategory)));
 app.use('/api',router.put('/gallery/:id',asyncMiddleware(galleryController.updateGallery)));
 app.use('/api',router.delete('/gallery/:id',asyncMiddleware(galleryController.deleteGallery)));

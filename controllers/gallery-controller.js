@@ -5,26 +5,10 @@ const {Lookup,validateLookup} = require('../models/lookup');
 const {Event,validateEvent} = require('../models/event');
 const APIFeatures = require('./../utils/APIFeatures');
 
-exports.getGallery = async (req, res) => {
-  try {
-    const apiFeatures = new APIFeatures(Gallery.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const galleries = await apiFeatures.query;
-    res.status(200).send(galleries);
-  } catch (err) {
-    res.status(404).json({
-      message: err
-    });
-  }
+exports.getGallery =async (req, res) => {
+    const gallery = await Gallery.find().sort('description');
+    res.send(gallery);
 };
-
-// exports.getGallery =async (req, res) => {
-//     const gallery = await Gallery.find().sort('description');
-//     res.send(gallery);
-// };
 
 exports.createGallery =async (req, res) => {
     const { error } = validateGallery(req.body); 
@@ -124,4 +108,18 @@ exports.getGalleryByCategory = async (req, res) => {
   
     res.send(gallery);
 
+};
+
+exports.getGalleries = async (req, res) => {
+  
+  const apiFeatures = new APIFeatures(Gallery.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const galleries = await apiFeatures.query;
+  if (!galleries) return res.status(404).send('No gallery(s) found with the provided data.');
+  
+  res.status(200).send(galleries);
 };
