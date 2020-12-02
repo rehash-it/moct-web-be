@@ -43,6 +43,7 @@ app.use('/api',router.delete('/gallery/:id',asyncMiddleware(galleryController.de
 
 app.use('/api',router.post('/lookup',asyncMiddleware(lookupController.createLookup)));
 app.use('/api',router.get('/lookup',asyncMiddleware(lookupController.getLookup)));
+app.use('/api',router.get('/lookup/:type',asyncMiddleware(lookupController.getLookupByType)));
 app.use('/api',router.put('/lookup/:id',asyncMiddleware(lookupController.updateLookup)));
 app.use('/api',router.delete('/lookup/:id',asyncMiddleware(lookupController.deleteLookup)));
 
