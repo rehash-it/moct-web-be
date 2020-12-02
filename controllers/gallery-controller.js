@@ -14,14 +14,14 @@ exports.createGallery =async (req, res) => {
     const { error } = validateGallery(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
-    const category= await GalleryCategory.findById(req.body.categoryId);
+    const category= await GalleryCategory.findById(req.body.category);
     if(!category) return res.status(400).send('Invalid Category');
   
 
     const type= await Lookup.findById(req.body.typeId);
     if(!type) return res.status(400).send('Invalid Type');
 
-    const eventType= await Event.findById(req.body.eventTypeId);
+    const eventType= await Event.findById(req.body.eventType);
     if(!eventType) return res.status(400).send('Invalid Event Type');
 
  
@@ -39,10 +39,10 @@ exports.createGallery =async (req, res) => {
         description: req.body.description,
         fileurl:req.body.fileurl,
         type:type,
-        eventType:eventType,
+        eventType:req.body.eventType,
         istangible:req.body.istangible,
         tags:tags,
-        category:req.body.categoryId,
+        category:req.body.category,
         capturedYear:req.body.capturedYear,
     });
     gallery = await gallery.save();
@@ -53,14 +53,14 @@ exports.updateGallery = async (req, res) => {
     const { error } = validateGallery(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
   
-    const category= await GalleryCategory.findById(req.body.categoryId);
+    const category= await GalleryCategory.findById(req.body.category);
     if(!category) return res.status(400).send('Invalid Category');
   
 
     const type= await Lookup.findById(req.body.typeId);
     if(!type) return res.status(400).send('Invalid Type');
 
-    const eventType= await Event.findById(req.body.eventTypeId);
+    const eventType= await Event.findById(req.body.eventType);
     if(!eventType) return res.status(400).send('Invalid Event Type');
 
  
@@ -78,10 +78,10 @@ exports.updateGallery = async (req, res) => {
       description: req.body.description,
       fileurl:req.body.fileurl,
       type:type,
-      eventType:eventType,
+      eventType:req.body.eventType,
       istangible:req.body.istangible,
       tags:tags,
-      category:req.body.categoryId,
+      category:req.body.category,
       capturedYear:req.body.capturedYear,
     }, {
       new: true
