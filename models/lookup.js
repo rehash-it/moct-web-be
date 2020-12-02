@@ -6,9 +6,8 @@ const lookupSchema = new mongoose.Schema({
     required: true
   },
   type:{
-    type: String,
+    type: Number,
     required: true,
-    unique: true
   }
 });
 
@@ -17,7 +16,7 @@ const Lookup = mongoose.model('Lookup', lookupSchema);
 function validateLookup(lookup) {
   const schema = Joi.object({
     description: Joi.string().required(),
-    type: Joi.string().required()
+    type: Joi.number().required()
   });
   const validation = schema.validate(lookup);
   return validation;

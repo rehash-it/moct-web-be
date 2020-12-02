@@ -36,12 +36,14 @@ app.use('/api',router.delete('/galleryCategory/:id',asyncMiddleware(galleryCateg
 
 app.use('/api',router.post('/gallery',asyncMiddleware(galleryController.createGallery)));
 app.use('/api',router.get('/gallery',asyncMiddleware(galleryController.getGallery)));
+app.use('/api',router.get('/galleries',asyncMiddleware(galleryController.getGalleries)));
 app.use('/api',router.get('/galleryByCategory/:id',asyncMiddleware(galleryController.getGalleryByCategory)));
 app.use('/api',router.put('/gallery/:id',asyncMiddleware(galleryController.updateGallery)));
 app.use('/api',router.delete('/gallery/:id',asyncMiddleware(galleryController.deleteGallery)));
 
 app.use('/api',router.post('/lookup',asyncMiddleware(lookupController.createLookup)));
 app.use('/api',router.get('/lookup',asyncMiddleware(lookupController.getLookup)));
+app.use('/api',router.get('/lookup/:type',asyncMiddleware(lookupController.getLookupByType)));
 app.use('/api',router.put('/lookup/:id',asyncMiddleware(lookupController.updateLookup)));
 app.use('/api',router.delete('/lookup/:id',asyncMiddleware(lookupController.deleteLookup)));
 
