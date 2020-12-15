@@ -50,6 +50,8 @@ const gallerySchema = new mongoose.Schema({
   }
 });
 
+gallerySchema.index({'$**':'text'})
+
 const Gallery = mongoose.model('Gallery', gallerySchema);
 
 function validateGallery(gallery) {

@@ -110,6 +110,15 @@ exports.getGalleryByCategory = async (req, res) => {
 
 };
 
+exports.getGalleryById = async (req, res) => {
+    const gallery= await Gallery.findById({"_id": req.params.id}).select({ });
+  
+    if (!gallery) return res.status(404).send('The Gallery with the given ID was not found.');
+  
+    res.send(gallery);
+
+};
+
 exports.getGalleries = async (req, res) => {
   
   const apiFeatures = new APIFeatures(Gallery.find(), req.query)
