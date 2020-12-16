@@ -18,8 +18,8 @@ exports.createGallery =async (req, res) => {
     if(!category) return res.status(400).send('Invalid Category');
   
 
-    const type= await Lookup.findById(req.body.typeId);
-    if(!type) return res.status(400).send('Invalid Type');
+    // const type= await Lookup.findById(req.body.typeId);
+    // if(!type) return res.status(400).send('Invalid Type');
 
     const eventType= await Event.findById(req.body.eventType);
     if(!eventType) return res.status(400).send('Invalid Event Type');
