@@ -83,6 +83,7 @@ exports.updateGallery = async (req, res) => {
       tags:tags,
       category:req.body.category,
       capturedYear:req.body.capturedYear,
+      caption:req.body.caption,
     }, {
       new: true
     });
@@ -102,7 +103,7 @@ exports.deleteGallery =async (req, res) => {
 };
 
 exports.getGalleryByCategory = async (req, res) => {
-    const gallery= await Gallery.find({"category": req.params.id}).select({ });
+    const gallery= await Gallery.find(req.params.id).select({ });
   
     if (!gallery) return res.status(404).send('The Gallery with the given ID was not found.');
   
@@ -111,7 +112,7 @@ exports.getGalleryByCategory = async (req, res) => {
 };
 
 exports.getGalleryById = async (req, res) => {
-    const gallery= await Gallery.findById({"_id": req.params.id}).select({ });
+    const gallery= await Gallery.findById(req.params.id).select({ });
   
     if (!gallery) return res.status(404).send('The Gallery with the given ID was not found.');
   

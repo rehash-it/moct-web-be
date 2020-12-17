@@ -36,7 +36,7 @@ exports.deleteLookup =async (req, res) => {
 };
 
 exports.getLookupByType = async (req, res) => {
-    const lookup= await Lookup.find({"type": req.params.type}).select({ });
+    const lookup= await Lookup.find({"type": req.params.type});
   
     if (!lookup) return res.status(404).send('The Lookup with the given ID was not found.');
   
