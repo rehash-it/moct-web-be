@@ -40,7 +40,6 @@ const gallerySchema = new mongoose.Schema({
   },
   category:{
       type: String,
-      ref:'GalleryCategory'
   },
   capturedYear:{ 
     type : Date, 
