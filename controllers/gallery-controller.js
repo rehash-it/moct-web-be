@@ -24,16 +24,7 @@ exports.createGallery =async (req, res) => {
     const eventType= await Event.findById(req.body.eventType);
     if(!eventType) return res.status(400).send('Invalid Event Type');
 
- 
-    let tags=[];
-    for (let i=0;i<req.body.tags.length;i++){
-      let result= await Lookup.findById(req.body.tags[i]);
-      if(!result){
-        return res.status(400).send('Invalid Tag');
-      } else{     
-        tags.push(result.description);
-      }
-    }
+
 
     let gallery = new Gallery({ 
         description: req.body.description,
@@ -41,7 +32,7 @@ exports.createGallery =async (req, res) => {
         type:type,
         eventType:req.body.eventType,
         istangible:req.body.istangible,
-        tags:tags,
+        tags:req.body.tags,
         category:req.body.category,
         capturedYear:req.body.capturedYear,
     });
