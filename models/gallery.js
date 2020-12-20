@@ -60,6 +60,7 @@ function validateGallery(gallery) {
     fileurl: Joi.string().required(),
     eventType: Joi.string().required(),
     description: Joi.string().required(),
+    caption: Joi.string().required(),
     istangible: Joi.boolean().required(),
     tags:Joi.array().items(Joi.string()),
     category: Joi.string().required(),
