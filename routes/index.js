@@ -17,9 +17,46 @@ var cors = require('cors')
 
 module.exports=function(app){
 app.use(express.json());
+
+app.use('/api',router.all('/galleryCategory', function(req, res, next) {
+res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Headers", "X-Requested-With");
+next();
+}));
+
+app.use('/api',router.all('/auth', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
+app.use('/api',router.all('/me', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
+app.use('/api',router.all('/user', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
+app.use('/api',router.all('/contactinfo', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
+app.use('/api',router.all('/gallery', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
 app.use('/api', router.post('/auth', asyncMiddleware(authController.auth)));
 
-app.use('/api',router.get('/me', auth,asyncMiddleware(userController.getUser)));
+app.use('/api',router.get('/me',asyncMiddleware(userController.getUser)));
 
 app.use('/api',router.post('/user', asyncMiddleware(userController.createUser)));
 
@@ -38,6 +75,7 @@ app.use('/api',router.post('/gallery',asyncMiddleware(galleryController.createGa
 app.use('/api',router.get('/gallery',asyncMiddleware(galleryController.getGallery)));
 app.use('/api',router.get('/galleries',asyncMiddleware(galleryController.getGalleries)));
 app.use('/api',router.get('/galleryByCategory/:id',asyncMiddleware(galleryController.getGalleryByCategory)));
+app.use('/api',router.get('/gallery/:id',asyncMiddleware(galleryController.getGalleryById)));
 app.use('/api',router.put('/gallery/:id',asyncMiddleware(galleryController.updateGallery)));
 app.use('/api',router.delete('/gallery/:id',asyncMiddleware(galleryController.deleteGallery)));
 

@@ -14,36 +14,28 @@ exports.createGallery =async (req, res) => {
     const { error } = validateGallery(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
-    const category= await GalleryCategory.findById(req.body.categoryId);
+    const category= await GalleryCategory.findById(req.body.category);
     if(!category) return res.status(400).send('Invalid Category');
   
 
     const type= await Lookup.findById(req.body.typeId);
     if(!type) return res.status(400).send('Invalid Type');
 
-    const eventType= await Event.findById(req.body.eventTypeId);
+    const eventType= await Event.findById(req.body.eventType);
     if(!eventType) return res.status(400).send('Invalid Event Type');
 
- 
-    let tags=[];
-    for (let i=0;i<req.body.tags.length;i++){
-      let result= await Lookup.findById(req.body.tags[i]);
-      if(!result){
-        return res.status(400).send('Invalid Tag');
-      } else{     
-        tags.push(result.description);
-      }
-    }
+
 
     let gallery = new Gallery({ 
         description: req.body.description,
         fileurl:req.body.fileurl,
         type:type,
-        eventType:eventType,
+        eventType:req.body.eventType,
         istangible:req.body.istangible,
-        tags:tags,
-        category:req.body.categoryId,
+        tags:req.body.tags,
+        category:req.body.category,
         capturedYear:req.body.capturedYear,
+        caption:req.body.caption,
     });
     gallery = await gallery.save();
     
@@ -53,14 +45,14 @@ exports.updateGallery = async (req, res) => {
     const { error } = validateGallery(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
   
-    const category= await GalleryCategory.findById(req.body.categoryId);
+    const category= await GalleryCategory.findById(req.body.category);
     if(!category) return res.status(400).send('Invalid Category');
   
 
     const type= await Lookup.findById(req.body.typeId);
     if(!type) return res.status(400).send('Invalid Type');
 
-    const eventType= await Event.findById(req.body.eventTypeId);
+    const eventType= await Event.findById(req.body.eventType);
     if(!eventType) return res.status(400).send('Invalid Event Type');
 
  
@@ -78,10 +70,10 @@ exports.updateGallery = async (req, res) => {
       description: req.body.description,
       fileurl:req.body.fileurl,
       type:type,
-      eventType:eventType,
+      eventType:req.body.eventType,
       istangible:req.body.istangible,
       tags:tags,
-      category:req.body.categoryId,
+      category:req.body.category,
       capturedYear:req.body.capturedYear,
     }, {
       new: true
@@ -103,6 +95,15 @@ exports.deleteGallery =async (req, res) => {
 
 exports.getGalleryByCategory = async (req, res) => {
     const gallery= await Gallery.find({"category": req.params.id}).select({ });
+  
+    if (!gallery) return res.status(404).send('The Gallery with the given ID was not found.');
+  
+    res.send(gallery);
+
+};
+
+exports.getGalleryById = async (req, res) => {
+    const gallery= await Gallery.findById({"_id": req.params.id}).select({ });
   
     if (!gallery) return res.status(404).send('The Gallery with the given ID was not found.');
   

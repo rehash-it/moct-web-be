@@ -7,7 +7,7 @@ const galleryCategorySchema = require('./gallery_category');
 const { boolean } = require('joi');
 const gallerySchema = new mongoose.Schema({
   type: {
-    type: String,
+    type: galleryTypeSchema,
     required: true
   },
   fileurl:{
@@ -16,7 +16,7 @@ const gallerySchema = new mongoose.Schema({
     unique: true
   },
   eventType:{
-    type: eventTypeSchema
+    type: String
   },
   description:{
     type:String,
@@ -39,7 +39,7 @@ const gallerySchema = new mongoose.Schema({
     type:[String],
   },
   category:{
-      type: galleryCategorySchema,
+      type: String,
   },
   capturedYear:{ 
     type : Date, 
@@ -50,17 +50,20 @@ const gallerySchema = new mongoose.Schema({
   }
 });
 
+gallerySchema.index({'$**':'text'})
+
 const Gallery = mongoose.model('Gallery', gallerySchema);
 
 function validateGallery(gallery) {
   const schema = Joi.object({
     typeId: Joi.string().required(),
     fileurl: Joi.string().required(),
-    eventTypeId: Joi.string().required(),
+    eventType: Joi.string().required(),
     description: Joi.string().required(),
+    caption: Joi.string().required(),
     istangible: Joi.boolean().required(),
     tags:Joi.array().items(Joi.string()),
-    categoryId: Joi.string().required(),
+    category: Joi.string().required(),
     capturedYear: Joi.string().required(),
   });
   const validation = schema.validate(gallery);

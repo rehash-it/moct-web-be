@@ -8,7 +8,7 @@ const eventSchema = new mongoose.Schema({
     unique: true
   },
   location:{
-    type:locationSchema
+    type: String
   },
   eventyear:{ 
     type : Date, 
@@ -21,7 +21,7 @@ const Event = mongoose.model('Event', eventSchema);
 function validateEvent(event) {
   const schema = Joi.object({
     description: Joi.string().min(8).required(),
-    locationId:Joi.string().required(),
+    location:Joi.string().required(),
     eventyear:Joi.date()
   });
   const validation = schema.validate(event);
