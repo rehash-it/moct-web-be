@@ -56,7 +56,7 @@ app.use('/api',router.all('/gallery', function(req, res, next) {
 
 app.use('/api', router.post('/auth', asyncMiddleware(authController.auth)));
 
-app.use('/api',router.get('/me',asyncMiddleware(userController.getUser)));
+app.use('/api',router.get('/me/:id',asyncMiddleware(userController.getUser)));
 
 app.use('/api',router.post('/user', asyncMiddleware(userController.createUser)));
 app.use('/api',router.get('/user',asyncMiddleware(userController.getUsers)));
