@@ -16,7 +16,8 @@ const gallerySchema = new mongoose.Schema({
     unique: true
   },
   eventType:{
-    type: String
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Event'
   },
   description:{
     type:String,
@@ -39,7 +40,8 @@ const gallerySchema = new mongoose.Schema({
     type:[String],
   },
   category:{
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'GalleryCategory'
   },
   capturedYear:{ 
     type : Date, 
