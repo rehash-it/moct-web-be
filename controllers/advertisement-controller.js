@@ -2,7 +2,7 @@ const { Advertisement, validateAdvertisement } = require('../models/advertisemen
 const { Sponsor, validateSponsor } = require('../models/sponsor');
 
 exports.getAdvertisement = async (req, res) => {
-    const advertisement = await Advertisement.find().sort('createdAt');
+    const advertisement = await Advertisement.find().populate('sponsor').sort('createdAt');
     res.send(advertisement);
 };
 
