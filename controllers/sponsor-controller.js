@@ -1,9 +1,19 @@
 const { Sponsor, validateSponsor } = require('../models/sponsor');
+const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getSponsor = async (req, res) => {
-    const sponsor = await Sponsor.find().sort('createdAt');
-    res.send(sponsor);
-};
+  
+    const apiFeatures = new APIFeatures(Sponsor.find(), req.query)
+     .filter()
+     .sort()
+     .limitFields()
+     .paginate();
+ 
+   const sponsor = await apiFeatures.query;
+   if (!sponsor) return res.status(404).send('No sponsor(s) found with the provided data.');
+   
+   res.status(200).send(sponsor);
+ };
 
 exports.createSponsor = async (req, res) => {
     const { error } = validateSponsor(req.body);

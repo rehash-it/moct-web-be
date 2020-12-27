@@ -1,10 +1,19 @@
 const { Advertisement, validateAdvertisement } = require('../models/advertisement');
-const { Sponsor, validateSponsor } = require('../models/sponsor');
+const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getAdvertisement = async (req, res) => {
-    const advertisement = await Advertisement.find().populate('sponsor').sort('createdAt');
-    res.send(advertisement);
-};
+  
+    const apiFeatures = new APIFeatures(Advertisement.find().populate('sponsor'), req.query)
+     .filter()
+     .sort()
+     .limitFields()
+     .paginate();
+ 
+   const advertisement = await apiFeatures.query;
+   if (!advertisement) return res.status(404).send('No advertisement(s) found with the provided data.');
+   
+   res.status(200).send(advertisement);
+ };
 
 exports.createAdvertisement = async (req, res) => {
     const { error } = validateAdvertisement(req.body);
