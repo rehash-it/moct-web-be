@@ -35,6 +35,7 @@ exports.createGallery =async (req, res) => {
         tags:req.body.tags,
         category:req.body.category,
         capturedYear:req.body.capturedYear,
+        caption:req.body.caption,
     });
     gallery = await gallery.save();
     
@@ -113,7 +114,7 @@ exports.getGalleryById = async (req, res) => {
 
 exports.getGalleries = async (req, res) => {
   
-  const apiFeatures = new APIFeatures(Gallery.find(), req.query)
+  const apiFeatures = new APIFeatures(Gallery.find().populate('category eventType'), req.query)
     .filter()
     .sort()
     .limitFields()

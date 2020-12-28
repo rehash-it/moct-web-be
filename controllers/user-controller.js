@@ -67,5 +67,6 @@ exports.getUserById = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   const users = await User.find().sort('-createdAt').select('-password');
+  if (!users) return res.status(404).send('No user data found.');
   res.send(users);
 };
