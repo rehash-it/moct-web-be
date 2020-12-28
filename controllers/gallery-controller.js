@@ -114,7 +114,7 @@ exports.getGalleryById = async (req, res) => {
 
 exports.getGalleries = async (req, res) => {
   
-  const apiFeatures = new APIFeatures(Gallery.find().populate('category eventType'), req.query)
+   const apiFeatures = new APIFeatures(Gallery.find().populate('category eventType'), req.query)
     .filter()
     .sort()
     .limitFields()

@@ -10,6 +10,8 @@ const galleryCategoryController = require('../controllers/gallery-category-conro
 const galleryController = require('../controllers/gallery-controller');
 const lookupController = require('../controllers/lookup-controller');
 const eventController = require('../controllers/event-controller');
+const sponsorController = require('../controllers/sponsor-controller');
+const advertisementController = require('../controllers/advertisement-controller');
 const upcomingeventsController = require('../controllers/upcoming-events-controller');
 const faqController = require('../controllers/faq-controller');
 
@@ -56,6 +58,18 @@ app.use('/api',router.all('/gallery', function(req, res, next) {
     next();
 }));
 
+app.use('/api',router.all('/sponsor', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
+app.use('/api',router.all('/advertisement', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+}));
+
 app.use('/api', router.post('/auth', asyncMiddleware(authController.auth)));
 
 app.use('/api',router.get('/me/:id',asyncMiddleware(userController.getUser)));
@@ -95,6 +109,19 @@ app.use('/api',router.post('/event',asyncMiddleware(eventController.createEvent)
 app.use('/api',router.get('/event',asyncMiddleware(eventController.getEvent)));
 app.use('/api',router.put('/event/:id',asyncMiddleware(eventController.updateEvent)));
 app.use('/api',router.delete('/event/:id',asyncMiddleware(eventController.deleteEvent)));
+
+app.use('/api',router.post('/sponsor',asyncMiddleware(sponsorController.createSponsor)));
+app.use('/api',router.get('/sponsor',asyncMiddleware(sponsorController.getSponsor)));
+app.use('/api',router.get('/sponsor/:id',asyncMiddleware(sponsorController.getSponsorById)));
+app.use('/api',router.put('/sponsor/:id',asyncMiddleware(sponsorController.updateSponsor)));
+app.use('/api',router.delete('/sponsor/:id',asyncMiddleware(sponsorController.deleteSponsor)));
+
+app.use('/api',router.post('/advertisement',asyncMiddleware(advertisementController.createAdvertisement)));
+app.use('/api',router.get('/advertisement',asyncMiddleware(advertisementController.getAdvertisement)));
+app.use('/api',router.get('/advertisement/:id',asyncMiddleware(advertisementController.getAdvertisementById)));
+app.use('/api',router.get('/advertisement/:id',asyncMiddleware(advertisementController.getAdvertisementBySponsor)));
+app.use('/api',router.put('/advertisement/:id',asyncMiddleware(advertisementController.updateAdvertisement)));
+app.use('/api',router.delete('/advertisement/:id',asyncMiddleware(advertisementController.deleteAdvertisement)));
 
 app.use('/api',router.post('/upcomingevent',asyncMiddleware(upcomingeventsController.createUpcomingEvent)));
 app.use('/api',router.get('/upcomingevent',asyncMiddleware(upcomingeventsController.getUpcomingEvent)));
