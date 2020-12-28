@@ -3,16 +3,17 @@ const keys=require('./config/keys');
 Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
 const express = require('express');
-const app = express();
 const fileUpload = require('express-fileupload');
+const app = express();
 var cors = require('cors');
 app.use(cors());
 app.use(express.static('public'));
 app.use(fileUpload());
 require('./routes/index')(app);
 
+app.use('/public', express.static(__dirname + "/public"));
 
-app.post('/upload', (req, res) => {
+app.post('/api/upload', (req, res) => {
   if (!req.files) {
       return res.status(500).send({ msg: "file is not found" })
   }

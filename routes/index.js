@@ -10,6 +10,8 @@ const galleryCategoryController = require('../controllers/gallery-category-conro
 const galleryController = require('../controllers/gallery-controller');
 const lookupController = require('../controllers/lookup-controller');
 const eventController = require('../controllers/event-controller');
+const upcomingeventsController = require('../controllers/upcoming-events-controller');
+const faqController = require('../controllers/faq-controller');
 
 
 const error=require('../middleware/error');
@@ -93,6 +95,19 @@ app.use('/api',router.post('/event',asyncMiddleware(eventController.createEvent)
 app.use('/api',router.get('/event',asyncMiddleware(eventController.getEvent)));
 app.use('/api',router.put('/event/:id',asyncMiddleware(eventController.updateEvent)));
 app.use('/api',router.delete('/event/:id',asyncMiddleware(eventController.deleteEvent)));
+
+app.use('/api',router.post('/upcomingevent',asyncMiddleware(upcomingeventsController.createUpcomingEvent)));
+app.use('/api',router.get('/upcomingevent',asyncMiddleware(upcomingeventsController.getUpcomingEvent)));
+app.use('/api',router.get('/upcomingevent/:type',asyncMiddleware(upcomingeventsController.getUpcomingEventByTitle)));
+app.use('/api',router.put('/upcomingevent/:id',asyncMiddleware(upcomingeventsController.updateUpcomingEvent)));
+app.use('/api',router.delete('/upcomingevent/:id',asyncMiddleware(upcomingeventsController.deleteUpcomingEvent)));
+
+app.use('/api',router.post('/faq',asyncMiddleware(faqController.createFaq)));
+app.use('/api',router.get('/faq',asyncMiddleware(faqController.getFaq)));
+app.use('/api',router.get('/faq/:type',asyncMiddleware(faqController.getFAQByQuestion)));
+app.use('/api',router.put('/faq/:id',asyncMiddleware(faqController.updateFaq)));
+app.use('/api',router.delete('/faq/:id',asyncMiddleware(faqController.deleteFaq)));
+
 app.use(error);
 }
 
