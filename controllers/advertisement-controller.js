@@ -23,7 +23,7 @@ exports.createAdvertisement = async (req, res) => {
         title: req.body.title,
         sponsor: req.body.sponsor,
         bannerPhotoUrl: req.body.bannerPhotoUrl,
-        paidAmount: req.body.paidAmount,
+        // paidAmount: req.body.paidAmount,
         from: req.body.from,
         to: req.body.to,
         status: req.body.status,
@@ -38,10 +38,10 @@ exports.updateAdvertisement = async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     const advertisement = await Advertisement.findByIdAndUpdate(req.params.id, {
-        name: req.body.name,
-        spClass: req.body.spClass,
-        address: req.body.address,
-        phone: req.body.phone,
+        title: req.body.title,
+        sponsor: req.body.sponsor,
+        bannerPhotoUrl: req.body.bannerPhotoUrl,
+        // paidAmount: req.body.paidAmount,
         from: req.body.from,
         to: req.body.to,
         status: req.body.status,

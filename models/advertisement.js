@@ -4,7 +4,8 @@ const { boolean, string } = require('joi');
 const advertisementSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        unique:true,
     },
     sponsor: {
         type: mongoose.Schema.Types.ObjectId,
@@ -16,9 +17,9 @@ const advertisementSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    paidAmount: {
-        type: Number,
-    },
+    // paidAmount: {
+    //     type: Number,
+    // },
     status: {
         type: String,
         required: true
@@ -47,7 +48,7 @@ function validateAdvertisement(advertisement) {
         title: Joi.string().required(),
         sponsor: Joi.string().required(),
         bannerPhotoUrl: Joi.string().required(),
-        paidAmount: Joi.number(),
+        // paidAmount: Joi.number(),
         from: Joi.date().required(),
         to: Joi.date().required(),
         status: Joi.string().required(),
