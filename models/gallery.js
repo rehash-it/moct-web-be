@@ -46,6 +46,10 @@ const gallerySchema = new mongoose.Schema({
   capturedYear: {
     type: Date,
   },
+  status: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -66,6 +70,7 @@ function validateGallery(gallery) {
     istangible: Joi.boolean().required(),
     tags: Joi.array().items(Joi.string()),
     category: Joi.string().required(),
+    status: Joi.string().required(),
     capturedYear: Joi.string().required(),
   });
   const validation = schema.validate(gallery);
