@@ -36,7 +36,7 @@ exports.createGallery =async (req, res) => {
         category:req.body.category,
         capturedYear:req.body.capturedYear,
         caption:req.body.caption,
-        stasus:req.body.stasus,
+        status:req.body.status,
     });
     gallery = await gallery.save();
     
