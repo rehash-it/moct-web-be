@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User, validateUser } = require('../models/user');
+const APIFeatures = require('./../utils/APIFeatures');
 
 
 exports.getUser = async (req, res) => {
@@ -66,7 +67,15 @@ exports.getUserById = async (req, res) => {
 };
 
 exports.getUsers = async (req, res) => {
-  const users = await User.find().sort('-createdAt').select('-password');
-  if (!users) return res.status(404).send('No user data found.');
-  res.send(users);
+  
+  const apiFeatures = new APIFeatures(User.find().select('-password'), req.query)
+   .filter()
+   .sort()
+   .limitFields()
+   .paginate();
+
+ const users = await apiFeatures.query;
+ if (!users) return res.status(404).send('No user(s) found with the provided data.');
+ 
+ res.status(200).send(users);
 };
