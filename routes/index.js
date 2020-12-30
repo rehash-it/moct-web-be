@@ -92,6 +92,8 @@ app.use('/api',router.put('/galleryCategory/:id',asyncMiddleware(galleryCategory
 app.use('/api',router.delete('/galleryCategory/:id',asyncMiddleware(galleryCategoryController.deleteGalleryCategory)));
 
 app.use('/api',router.post('/gallery',asyncMiddleware(galleryController.createGallery)));
+app.use('/api',router.post('/gallery/like/:id',asyncMiddleware(galleryController.updateLike)));
+app.use('/api',router.post('/gallery/view/:id',asyncMiddleware(galleryController.updateView)));
 app.use('/api',router.get('/gallery',asyncMiddleware(galleryController.getGallery)));
 app.use('/api',router.get('/galleries',asyncMiddleware(galleryController.getGalleries)));
 app.use('/api',router.get('/galleryByCategory/:id',asyncMiddleware(galleryController.getGalleryByCategory)));
