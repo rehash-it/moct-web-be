@@ -43,7 +43,7 @@ exports.createGallery =async (req, res) => {
     res.send(gallery);
 };
 exports.updateLike = async(req,res)=>{
-  const gallery = await Gallery.findOneAndUpdate(req.params.id, { 
+  const gallery = await Gallery.findByIdAndUpdate(req.params.id, { 
     $inc : {likes : 1}
   }, {
     new: true
@@ -54,7 +54,7 @@ exports.updateLike = async(req,res)=>{
   res.send(gallery);
 }
 exports.updateView = async(req,res)=>{
-  const gallery = await Gallery.findOneAndUpdate(req.params.id, { 
+  const gallery = await Gallery.findByIdAndUpdate(req.params.id, { 
     $inc : {views : 1}
   }, {
     new: true
