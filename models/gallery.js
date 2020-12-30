@@ -49,6 +49,11 @@ const gallerySchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  likes:{
+    type: Number,
+    default:0,
+    required:false
   }
 });
 

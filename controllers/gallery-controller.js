@@ -41,6 +41,28 @@ exports.createGallery =async (req, res) => {
     
     res.send(gallery);
 };
+exports.updateLike = async(req,res)=>{
+  const gallery = await Gallery.findOneAndUpdate(req.params.id, { 
+    $inc : {likes : 1}
+  }, {
+    new: true
+  });
+
+  if (!gallery) return res.status(404).send('The Gallery with the given ID was not found.');
+  
+  res.send(gallery);
+}
+exports.updateView = async(req,res)=>{
+  const gallery = await Gallery.findOneAndUpdate(req.params.id, { 
+    $inc : {views : 1}
+  }, {
+    new: true
+  });
+
+  if (!gallery) return res.status(404).send('The Gallery with the given ID was not found.');
+  
+  res.send(gallery);
+}
 exports.updateGallery = async (req, res) => {
     const { error } = validateGallery(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
