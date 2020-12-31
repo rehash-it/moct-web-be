@@ -6,7 +6,7 @@ const {Event,validateEvent} = require('../models/event');
 const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getGallery =async (req, res) => {
-    const gallery = await Gallery.find().sort('description');
+    const gallery = await Gallery.find({"status": "APPROVED"}).select({}).sort('description');
     res.send(gallery);
 };
 
