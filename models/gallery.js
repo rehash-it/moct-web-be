@@ -63,10 +63,7 @@ const gallerySchema = new mongoose.Schema({
     default:0,
     required:false
   },
-  status: {
-    type: String,
-    required: true
-},
+
 });
 
 gallerySchema.index({ '$**': 'text' })
