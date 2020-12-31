@@ -1,14 +1,10 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
-const locationSchema = require('./lookup');
 const eventSchema = new mongoose.Schema({
  description: {
     type: String,
     required: true,
     unique: true
-  },
-  location:{
-    type: String
   },
   eventyear:{ 
     type : Date, 
@@ -21,7 +17,6 @@ const Event = mongoose.model('Event', eventSchema);
 function validateEvent(event) {
   const schema = Joi.object({
     description: Joi.string().min(8).required(),
-    location:Joi.string().required(),
     eventyear:Joi.date()
   });
   const validation = schema.validate(event);
