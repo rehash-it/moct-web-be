@@ -116,7 +116,7 @@ exports.deleteGallery =async (req, res) => {
 };
 
 exports.getGalleryByCategory = async (req, res) => {
-    const gallery= await Gallery.find(req.params.id).select({ });
+    const gallery= await Gallery.find(req.params.category).select({ });
   
     if (!gallery) return res.status(404).send('The Gallery with the given ID was not found.');
   
