@@ -22,14 +22,12 @@ const userSchema = new mongoose.Schema({
 
   isAdmin: {
     type: Boolean,
-    default: false,
-    required: false,
+    required: true,
   },
 
   isActive: {
     type: Boolean,
-    default: false,
-    required: false,
+    required: true,
   },
 
   // isAdmin: Boolean,
@@ -60,8 +58,8 @@ function validateUser(user) {
   const schema = Joi.object({
     username: Joi.string().min(5).max(255).required(),
     password: Joi.string().min(5).max(255).required(),
-    isAdmin: Joi.boolean(),
-    isActive: Joi.boolean(),
+    isAdmin: Joi.boolean().required(),
+    isActive: Joi.boolean().required(),
   });
   const validation = schema.validate(user);
   return validation;
