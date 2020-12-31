@@ -21,6 +21,9 @@ exports.createGallery =async (req, res) => {
     const type= await Lookup.findById(req.body.typeId);
     if(!type) return res.status(400).send('Invalid Type');
 
+    const location= await Lookup.findById(req.body.location);
+    if(!location) return res.status(400).send('Invalid Location');
+
     const eventType= await Event.findById(req.body.eventType);
     if(!eventType) return res.status(400).send('Invalid Event Type');
 
@@ -31,6 +34,7 @@ exports.createGallery =async (req, res) => {
         fileurl:req.body.fileurl,
         type:type,
         eventType:req.body.eventType,
+        location:location,
         istangible:req.body.istangible,
         tags:req.body.tags,
         category:req.body.category,
@@ -75,6 +79,9 @@ exports.updateGallery = async (req, res) => {
     const type= await Lookup.findById(req.body.typeId);
     if(!type) return res.status(400).send('Invalid Type');
 
+    const location= await Lookup.findById(req.body.location);
+    if(!location) return res.status(400).send('Invalid Location');
+
     const eventType= await Event.findById(req.body.eventType);
     if(!eventType) return res.status(400).send('Invalid Event Type');
     
@@ -83,6 +90,7 @@ exports.updateGallery = async (req, res) => {
       fileurl:req.body.fileurl,
       type:type,
       eventType:req.body.eventType,
+      location:location,
       istangible:req.body.istangible,
       tags:req.body.tags,
       category:req.body.category,
