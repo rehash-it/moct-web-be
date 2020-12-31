@@ -36,6 +36,7 @@ exports.createGallery =async (req, res) => {
         category:req.body.category,
         capturedYear:req.body.capturedYear,
         caption:req.body.caption,
+        status:req.body.status,
     });
     gallery = await gallery.save();
     
@@ -98,6 +99,7 @@ exports.updateGallery = async (req, res) => {
       category:req.body.category,
       capturedYear:req.body.capturedYear,
       caption:req.body.caption,
+      status:req.body.status,
     }, {
       new: true
     });

@@ -1,5 +1,4 @@
 const {Event, validateEvent} = require('../models/event');
-const {Lookup, validateLookup} = require('../models/lookup');
 
 exports.getEvent =async (req, res) => {
     const event = await Event.find().sort('description');
@@ -10,12 +9,11 @@ exports.createEvent =async (req, res) => {
     const { error } = validateEvent(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
   
-    const location= await Lookup.findById(req.body.location);
-    if(!location) return res.status(400).send('Invalid Location');
+    // const location= await Lookup.findById(req.body.location);
+    // if(!location) return res.status(400).send('Invalid Location');
 
     let event = new Event({ 
         description: req.body.description,
-        location:req.body.location,
         eventyear:req.body.eventyear 
     });
     event = await event.save();
@@ -26,12 +24,11 @@ exports.updateEvent = async (req, res) => {
     const { error } = validateEvent(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
     
-    const location= await Lookup.findById(req.body.location);
-    if(!location) return res.status(400).send('Invalid Location');
+    // const location= await Lookup.findById(req.body.location);
+    // if(!location) return res.status(400).send('Invalid Location');
 
     const event = await Event.findByIdAndUpdate(req.params.id, { 
         description: req.body.description,
-        location:req.body.location,
         eventyear:req.body.eventyear 
     }, {
       new: true

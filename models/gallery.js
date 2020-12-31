@@ -54,7 +54,11 @@ const gallerySchema = new mongoose.Schema({
     type: Number,
     default:0,
     required:false
-  }
+  },
+  status: {
+    type: String,
+    required: true
+},
 });
 
 gallerySchema.index({ '$**': 'text' })
@@ -72,6 +76,7 @@ function validateGallery(gallery) {
     tags: Joi.array().items(Joi.string()),
     category: Joi.string().required(),
     capturedYear: Joi.string().required(),
+    status: Joi.string().required()
   });
   const validation = schema.validate(gallery);
   return validation;
