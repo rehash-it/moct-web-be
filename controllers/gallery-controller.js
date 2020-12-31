@@ -43,7 +43,7 @@ exports.createGallery =async (req, res) => {
     res.send(gallery);
 };
 exports.updateLike = async(req,res)=>{
-  const gallery = await Gallery.findOneAndUpdate(req.params.id, { 
+  const gallery = await Gallery.findByIdAndUpdate(req.params.id, { 
     $inc : {likes : 1}
   }, {
     new: true
@@ -54,7 +54,7 @@ exports.updateLike = async(req,res)=>{
   res.send(gallery);
 }
 exports.updateView = async(req,res)=>{
-  const gallery = await Gallery.findOneAndUpdate(req.params.id, { 
+  const gallery = await Gallery.findByIdAndUpdate(req.params.id, { 
     $inc : {views : 1}
   }, {
     new: true
@@ -77,17 +77,6 @@ exports.updateGallery = async (req, res) => {
 
     const eventType= await Event.findById(req.body.eventType);
     if(!eventType) return res.status(400).send('Invalid Event Type');
-
- 
-    let tags=[];
-    for (let i=0;i<req.body.tags.length;i++){
-      let result= await Lookup.findById(req.body.tags[i]);
-      if(!result){
-        return res.status(400).send('Invalid Tag');
-      } else{     
-        tags.push(result.description);
-      }
-    }
     
     const gallery = await Gallery.findByIdAndUpdate(req.params.id, { 
       description: req.body.description,
@@ -95,7 +84,7 @@ exports.updateGallery = async (req, res) => {
       type:type,
       eventType:req.body.eventType,
       istangible:req.body.istangible,
-      tags:tags,
+      tags:req.body.tags,
       category:req.body.category,
       capturedYear:req.body.capturedYear,
       caption:req.body.caption,
