@@ -78,6 +78,7 @@ app.use('/api',router.post('/user', asyncMiddleware(userController.createUser)))
 app.use('/api',router.get('/user',asyncMiddleware(userController.getUsers)));
 app.use('/api',router.get('/user/:id',asyncMiddleware(userController.getUserById)));
 app.use('/api',router.put('/user/:id',asyncMiddleware(userController.updateUser)));
+app.use('/api',router.patch('/user/:id',asyncMiddleware(userController.updateUser)));
 app.use('/api',router.delete('/user/:id',asyncMiddleware(userController.deleteUser)));
 
 app.use('/api',router.post('/contactInfo', asyncMiddleware(contactInfoController.createContactInfo)));
