@@ -1,6 +1,11 @@
 const { Advertisement, validateAdvertisement } = require('../models/advertisement');
 const APIFeatures = require('./../utils/APIFeatures');
 
+
+exports.getAdverts =async (req, res) => {
+    const advertisements = await Advertisement.find({"status": "APPROVED"}).select({});
+    res.send(advertisements);
+};
 exports.getAdvertisement = async (req, res) => {
   
     const apiFeatures = new APIFeatures(Advertisement.find().populate('sponsor'), req.query)

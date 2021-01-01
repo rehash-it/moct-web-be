@@ -121,6 +121,7 @@ app.use('/api',router.delete('/sponsor/:id',asyncMiddleware(sponsorController.de
 
 app.use('/api',router.post('/advertisement',asyncMiddleware(advertisementController.createAdvertisement)));
 app.use('/api',router.get('/advertisement',asyncMiddleware(advertisementController.getAdvertisement)));
+app.use('/api',router.get('/advertisement/filtered',asyncMiddleware(advertisementController.getAdverts)));
 app.use('/api',router.get('/advertisement/:id',asyncMiddleware(advertisementController.getAdvertisementById)));
 app.use('/api',router.get('/advertisement/:id',asyncMiddleware(advertisementController.getAdvertisementBySponsor)));
 app.use('/api',router.put('/advertisement/:id',asyncMiddleware(advertisementController.updateAdvertisement)));
