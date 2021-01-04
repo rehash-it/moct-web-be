@@ -101,6 +101,7 @@ app.use('/api',router.get('/galleryByCategory/:id',asyncMiddleware(galleryContro
 app.use('/api',router.get('/gallery/:id',asyncMiddleware(galleryController.getGalleryById)));
 app.use('/api',router.put('/gallery/:id',asyncMiddleware(galleryController.updateGallery)));
 app.use('/api',router.delete('/gallery/:id',asyncMiddleware(galleryController.deleteGallery)));
+app.use('/api',router.put('/gallery/status/:data',asyncMiddleware(galleryController.updateGalleryStatus)));
 
 app.use('/api',router.post('/lookup',asyncMiddleware(lookupController.createLookup)));
 app.use('/api',router.get('/lookup',asyncMiddleware(lookupController.getLookup)));
