@@ -3,7 +3,7 @@ const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getSponsor = async (req, res) => {
   
-    const apiFeatures = new APIFeatures(Sponsor.find(), req.query)
+    const apiFeatures = new APIFeatures(Sponsor.find().populate('spClass'), req.query)
      .filter()
      .sort()
      .limitFields()

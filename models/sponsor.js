@@ -8,8 +8,9 @@ const sponsorSchema = new mongoose.Schema({
         unique:true,
     },
     spClass: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Lookup',
     },
     address: {
         type: String,
