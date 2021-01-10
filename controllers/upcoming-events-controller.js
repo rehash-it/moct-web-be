@@ -1,8 +1,17 @@
 const { UpcomingEvents, validateUpcomingEvents } = require('../models/upcoming_events');
+const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getUpcomingEvent = async (req, res) => {
-    const upcomingevent = await UpcomingEvents.find().sort('datefrom');
-    res.send(upcomingevent);
+    const apiFeatures = new APIFeatures(UpcomingEvents.find().populate('datefrom'), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+
+    const upcomingevent = await apiFeatures.query;
+    if (!upcomingevent) return res.status(404).send('No upcomingevent(s) found with the provided data.');
+
+    res.status(200).send(upcomingevent);
 };
 
 exports.createUpcomingEvent = async (req, res) => {
@@ -49,7 +58,6 @@ exports.updateUpcomingEvent = async (req, res) => {
 
     res.send(upcomingevent);
 };
-
 
 exports.deleteUpcomingEvent = async (req, res) => {
     const upcomingevent = await UpcomingEvents.findByIdAndRemove(req.params.id);
