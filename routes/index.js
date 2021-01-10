@@ -78,6 +78,7 @@ app.use('/api',router.post('/user', asyncMiddleware(userController.createUser)))
 app.use('/api',router.get('/user',asyncMiddleware(userController.getUsers)));
 app.use('/api',router.get('/user/:id',asyncMiddleware(userController.getUserById)));
 app.use('/api',router.put('/user/:id',asyncMiddleware(userController.updateUser)));
+app.use('/api',router.patch('/user/:id',asyncMiddleware(userController.updateUser)));
 app.use('/api',router.delete('/user/:id',asyncMiddleware(userController.deleteUser)));
 
 app.use('/api',router.post('/contactInfo', asyncMiddleware(contactInfoController.createContactInfo)));
@@ -100,6 +101,7 @@ app.use('/api',router.get('/galleryByCategory/:id',asyncMiddleware(galleryContro
 app.use('/api',router.get('/gallery/:id',asyncMiddleware(galleryController.getGalleryById)));
 app.use('/api',router.put('/gallery/:id',asyncMiddleware(galleryController.updateGallery)));
 app.use('/api',router.delete('/gallery/:id',asyncMiddleware(galleryController.deleteGallery)));
+app.use('/api',router.put('/gallery/status/:data',asyncMiddleware(galleryController.updateGalleryStatus)));
 
 app.use('/api',router.post('/lookup',asyncMiddleware(lookupController.createLookup)));
 app.use('/api',router.get('/lookup',asyncMiddleware(lookupController.getLookup)));
@@ -120,6 +122,7 @@ app.use('/api',router.delete('/sponsor/:id',asyncMiddleware(sponsorController.de
 
 app.use('/api',router.post('/advertisement',asyncMiddleware(advertisementController.createAdvertisement)));
 app.use('/api',router.get('/advertisement',asyncMiddleware(advertisementController.getAdvertisement)));
+app.use('/api',router.get('/advertisement/filtered',asyncMiddleware(advertisementController.getAdverts)));
 app.use('/api',router.get('/advertisement/:id',asyncMiddleware(advertisementController.getAdvertisementById)));
 app.use('/api',router.get('/advertisement/:id',asyncMiddleware(advertisementController.getAdvertisementBySponsor)));
 app.use('/api',router.put('/advertisement/:id',asyncMiddleware(advertisementController.updateAdvertisement)));

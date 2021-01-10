@@ -19,6 +19,10 @@ const gallerySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Event'
   },
+  location:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Lookup'
+  },
   description: {
     type: String,
     required: true,
@@ -59,10 +63,7 @@ const gallerySchema = new mongoose.Schema({
     default:0,
     required:false
   },
-  status: {
-    type: String,
-    required: true
-},
+
 });
 
 gallerySchema.index({ '$**': 'text' })
@@ -81,7 +82,7 @@ function validateGallery(gallery) {
     category: Joi.string().required(),
     status: Joi.string().required(),
     capturedYear: Joi.string().required(),
-    status: Joi.string().required()
+    location:Joi.string().required()
   });
   const validation = schema.validate(gallery);
   return validation;

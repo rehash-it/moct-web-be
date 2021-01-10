@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const lookupSchema = new mongoose.Schema({
  description: {
     type: String,
-    required: true
+    required: true,
+    unique:true,
   },
   type:{
     type: Number,

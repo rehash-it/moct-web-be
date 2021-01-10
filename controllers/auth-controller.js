@@ -9,6 +9,8 @@ exports.auth=async (req, res) => {
   
     let user = await User.findOne({ username: req.body.username });
     if (!user) return res.status(400).send('Invalid username or password.');
+
+    if (!user.isActive) return res.status(400).send('Your account is currently Inactive. Please contact system adminstrator.');
   
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).send('Invalid username or password.');

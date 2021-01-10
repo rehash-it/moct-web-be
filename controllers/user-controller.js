@@ -37,10 +37,10 @@ exports.updateUser = async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
 
   user = await User.findByIdAndUpdate(req.params.id, {
-    username: req.body.username,
-    password: req.body.password,
-    isAdmin: req.body.isAdmin,
-    isActive: req.body.isActive
+    username: user.username,
+    password: user.password,
+    isAdmin: user.isAdmin,
+    isActive: user.isActive
   }, {
     new: true
   }).select('-password');
