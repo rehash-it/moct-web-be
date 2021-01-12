@@ -18,7 +18,7 @@ exports.createGallery = async (req, res) => {
   if (!category) return res.status(400).send('Invalid Category');
 
 
-  const type = await Lookup.findById(req.body.typeId);
+  const type = await Lookup.findById(req.body.type);
   if (!type) return res.status(400).send('Invalid Type');
 
   const location = await Lookup.findById(req.body.location);
@@ -75,8 +75,7 @@ exports.updateGallery = async (req, res) => {
   const category = await GalleryCategory.findById(req.body.category);
   if (!category) return res.status(400).send('Invalid Category');
 
-
-  const type = await Lookup.findById(req.body.typeId);
+  const type = await Lookup.findById(req.body.type);
   if (!type) return res.status(400).send('Invalid Type');
 
   const location = await Lookup.findById(req.body.location);
@@ -88,9 +87,9 @@ exports.updateGallery = async (req, res) => {
   const gallery = await Gallery.findByIdAndUpdate(req.params.id, {
     description: req.body.description,
     fileurl: req.body.fileurl,
-    type: type,
+    type: req.body.type,
     eventType: req.body.eventType,
-    location: location,
+    location: req.body.location,
     istangible: req.body.istangible,
     tags: req.body.tags,
     category: req.body.category,
