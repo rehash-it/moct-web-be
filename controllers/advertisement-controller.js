@@ -3,7 +3,13 @@ const APIFeatures = require('./../utils/APIFeatures');
 
 
 exports.getAdverts =async (req, res) => {
-    const advertisements = await Advertisement.find({"status": "APPROVED"}).select({});
+    const advertisements = await Advertisement.find({"status": "APPROVED"}).populate({ 
+        path: 'sponsor',
+        populate: {
+          path: 'spClass',
+          model: 'Lookup'
+        } 
+     }).select({});
     res.send(advertisements);
 };
 exports.getAdvertisement = async (req, res) => {
