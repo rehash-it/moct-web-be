@@ -2,7 +2,7 @@ const { Faq, validateFaq } = require('../models/faq');
 const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getFaq = async (req, res) => {
-    const apiFeatures = new APIFeatures(Faq.find().populate('dateadded'), req.query)
+    const apiFeatures = new APIFeatures(Faq.find().populate('_id'), req.query)
         .filter()
         .sort()
         .limitFields()

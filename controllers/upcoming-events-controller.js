@@ -2,7 +2,7 @@ const { UpcomingEvents, validateUpcomingEvents } = require('../models/upcoming_e
 const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getUpcomingEvent = async (req, res) => {
-    const apiFeatures = new APIFeatures(UpcomingEvents.find().populate('datefrom'), req.query)
+    const apiFeatures = new APIFeatures(UpcomingEvents.find().populate('_id'), req.query)
         .filter()
         .sort()
         .limitFields()
