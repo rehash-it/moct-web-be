@@ -7,7 +7,9 @@ const galleryCategorySchema = require('./gallery_category');
 const { boolean } = require('joi');
 const gallerySchema = new mongoose.Schema({
   type: {
-    type: galleryTypeSchema,
+    // type: galleryTypeSchema,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Lookup',
     required: true
   },
   fileurl: {
@@ -72,7 +74,7 @@ const Gallery = mongoose.model('Gallery', gallerySchema);
 
 function validateGallery(gallery) {
   const schema = Joi.object({
-    typeId: Joi.string().required(),
+    type: Joi.string().required(),
     fileurl: Joi.string().required(),
     eventType: Joi.string().required(),
     description: Joi.string().required(),
