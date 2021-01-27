@@ -1,8 +1,17 @@
 const { Faq, validateFaq } = require('../models/faq');
+const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getFaq = async (req, res) => {
-    const faq = await Faq.find().sort('dateadded');
-    res.send(faq);
+    const apiFeatures = new APIFeatures(Faq.find().populate('_id'), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+
+    const faq = await apiFeatures.query;
+    if (!faq) return res.status(404).send('No faq(s) found with the provided data.');
+
+    res.status(200).send(faq);
 };
 
 exports.createFaq = async (req, res) => {
@@ -52,7 +61,7 @@ exports.deleteFaq = async (req, res) => {
 exports.getFAQByQuestion = async (req, res) => {
     const faq = await Faq.find({ "question": req.params.question });
 
-    if (!faq) return res.status(404).send('The Event with the given ID was not found.');
+    if (!faq) return res.status(404).send('The FAQ with the given ID was not found.');
 
     res.status(200).send(faq);
 
