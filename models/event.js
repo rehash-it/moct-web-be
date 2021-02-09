@@ -16,7 +16,7 @@ const Event = mongoose.model('Event', eventSchema);
 
 function validateEvent(event) {
   const schema = Joi.object({
-    description: Joi.string().min(8).required(),
+    description: Joi.string().min(5).required(),
     eventyear:Joi.date()
   });
   const validation = schema.validate(event);
