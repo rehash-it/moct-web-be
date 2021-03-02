@@ -39,11 +39,18 @@ exports.updateEvent = async (req, res) => {
     res.send(event);
 };
 
+// exports.deleteEvent =async (req, res) => {
+//     const event = await Event.findByIdAndRemove(req.params.id);
+  
+//     if (!event) return res.status(404).send('The Event with the given ID was not found.');
+  
+//     res.send(event);
+// };
 
-exports.deleteEvent =async (req, res) => {
-    const event = await Event.findByIdAndRemove(req.params.id);
-  
-    if (!event) return res.status(404).send('The Event with the given ID was not found.');
-  
-    res.send(event);
+exports.deleteEvent = async function (req, res, next) {
+    Event.findById(req.params.id, function (err, event) {
+        if (err) return next(err);
+        event.remove();
+        res.status(200).send(event);
+    });
 };

@@ -2,18 +2,18 @@ const { Sponsor, validateSponsor } = require('../models/sponsor');
 const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getSponsor = async (req, res) => {
-  
+
     const apiFeatures = new APIFeatures(Sponsor.find().populate('spClass'), req.query)
-     .filter()
-     .sort()
-     .limitFields()
-     .paginate();
- 
-   const sponsor = await apiFeatures.query;
-   if (!sponsor) return res.status(404).send('No sponsor(s) found with the provided data.');
-   
-   res.status(200).send(sponsor);
- };
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+
+    const sponsor = await apiFeatures.query;
+    if (!sponsor) return res.status(404).send('No sponsor(s) found with the provided data.');
+
+    res.status(200).send(sponsor);
+};
 
 exports.createSponsor = async (req, res) => {
     const { error } = validateSponsor(req.body);
@@ -56,13 +56,22 @@ exports.updateSponsor = async (req, res) => {
 };
 
 
-exports.deleteSponsor = async (req, res) => {
-    const sponsor = await Sponsor.findByIdAndRemove(req.params.id);
+// exports.deleteSponsor = async (req, res) => {
+//     const sponsor = await Sponsor.findByIdAndRemove(req.params.id);
 
-    if (!Sponsor) return res.status(404).send('The Sponsor with the given ID was not found.');
+//     if (!sponsor) return res.status(404).send('The Sponsor with the given ID was not found.');
 
-    res.send(sponsor);
+//     res.send(sponsor);
+// };
+
+exports.deleteSponsor = async function (req, res, next) {
+    Sponsor.findById(req.params.id, function (err, sponsor) {
+        if (err) return next(err);
+        sponsor.remove();
+        res.status(200).send(sponsor);
+    });
 };
+
 exports.getSponsorById = async (req, res) => {
     const sponsor = await Sponsor.findById(req.params.id);
 

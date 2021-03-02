@@ -27,13 +27,22 @@ exports.updateGalleryCategory = async (req, res) => {
 };
 
 
-exports.deleteGalleryCategory =async (req, res) => {
-    const galleryCategory = await GalleryCategory.findByIdAndRemove(req.params.id);
+// exports.deleteGalleryCategory =async (req, res) => {
+//     const galleryCategory = await GalleryCategory.findByIdAndRemove(req.params.id);
   
-    if (!galleryCategory) return res.status(404).send('The Gallery Category with the given ID was not found.');
+//     if (!galleryCategory) return res.status(404).send('The Gallery Category with the given ID was not found.');
   
-    res.send(galleryCategory);
+//     res.send(galleryCategory);
+// };
+
+exports.deleteGalleryCategory = async function (req, res, next) {
+    GalleryCategory.findById(req.params.id, function (err, galleryCategory) {
+        if (err) return next(err);
+        galleryCategory.remove();
+        res.status(200).send(galleryCategory);
+    });
 };
+
 exports.getGalleryCategoryById = async (req, res) => {
     const galleryCategory= await GalleryCategory.findById(req.params.id);
   
