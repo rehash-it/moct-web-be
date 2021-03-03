@@ -2,7 +2,7 @@ const { Faq, validateFaq } = require('../models/faq');
 const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getFaq = async (req, res) => {
-    const apiFeatures = new APIFeatures(Faq.find().populate('_id'), req.query)
+    const apiFeatures = new APIFeatures(Faq.find(), req.query)
         .filter()
         .sort()
         .limitFields()
@@ -65,4 +65,14 @@ exports.getFAQByQuestion = async (req, res) => {
 
     res.status(200).send(faq);
 
+};
+
+exports.getFaqById = async (req, res) => {
+    console.log("1 faq  - " + req.params.id)
+
+    const faq = await Faq.findById(req.params.id);
+
+    if (!faq) return res.status(404).send('The Faq with the given ID was not found.');
+
+    res.send(faq);
 };

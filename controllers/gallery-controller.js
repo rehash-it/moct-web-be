@@ -183,3 +183,13 @@ exports.getGalleries = async (req, res) => {
 
   res.status(200).send(galleries);
 };
+
+exports.getGalleryByReqStatus = async (req, res) => {
+
+  const gallery = await Gallery.find({ "status": "REQUESTED" });
+
+  if (!gallery) return res.status(404).send('The Gallery with the given status was not found.');
+
+  res.send(gallery);
+
+};
