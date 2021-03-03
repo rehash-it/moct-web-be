@@ -68,11 +68,7 @@ exports.getFAQByQuestion = async (req, res) => {
 };
 
 exports.getFaqById = async (req, res) => {
-    console.log("1 faq  - " + req.params.id)
-
     const faq = await Faq.findById(req.params.id);
-
     if (!faq) return res.status(404).send('The Faq with the given ID was not found.');
-
     res.send(faq);
 };

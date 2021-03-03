@@ -2,7 +2,6 @@ const { UpcomingEvents, validateUpcomingEvents } = require('../models/upcoming_e
 const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getUpcomingEvent = async (req, res) => {
-    console.log("1 All - " )
     const apiFeatures = new APIFeatures(UpcomingEvents.find(), req.query)
         .filter()
         .sort()
@@ -78,9 +77,7 @@ exports.getUpcomingEventByTitle = async (req, res) => {
 };
 
 exports.getOneEvent = async (req, res) => {
-    console.log("1  - " )
     const upcomingevent = await UpcomingEvents.findById(req.params.id);
-    console.log("2  - " + upcomingevent)
     if (!upcomingevent) return res.status(404).send('The Upcoming Event with the given ID was not found.');
 
     res.send(upcomingevent);
