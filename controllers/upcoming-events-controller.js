@@ -2,16 +2,16 @@ const { UpcomingEvents, validateUpcomingEvents } = require('../models/upcoming_e
 const APIFeatures = require('./../utils/APIFeatures');
 
 exports.getUpcomingEvent = async (req, res) => {
-    const apiFeatures = new APIFeatures(UpcomingEvents.find().populate('_id'), req.query)
+    const apiFeatures = new APIFeatures(UpcomingEvents.find(), req.query)
         .filter()
         .sort()
         .limitFields()
         .paginate();
 
     const upcomingevent = await apiFeatures.query;
-    if (!upcomingevent) return res.status(404).send('No upcomingevent(s) found with the provided data.');
+    if (!upcomingevent) return res.status(404).send('No Upcoming Event(s) found with the provided data.');
 
-    res.status(200).send(upcomingevent);
+    res.status(200).send(upcomingevent);    
 };
 
 exports.createUpcomingEvent = async (req, res) => {
@@ -54,7 +54,7 @@ exports.updateUpcomingEvent = async (req, res) => {
             new: true
         });
 
-    if (!upcomingevent) return res.status(404).send('The Event with the given ID was not found.');
+    if (!upcomingevent) return res.status(404).send('The Upcoming Event with the given ID was not found.');
 
     res.send(upcomingevent);
 };
@@ -62,7 +62,7 @@ exports.updateUpcomingEvent = async (req, res) => {
 exports.deleteUpcomingEvent = async (req, res) => {
     const upcomingevent = await UpcomingEvents.findByIdAndRemove(req.params.id);
 
-    if (!upcomingevent) return res.status(404).send('The Event with the given ID was not found.');
+    if (!upcomingevent) return res.status(404).send('The Upcoming Event with the given ID was not found.');
 
     res.send(upcomingevent);
 };
@@ -70,8 +70,15 @@ exports.deleteUpcomingEvent = async (req, res) => {
 exports.getUpcomingEventByTitle = async (req, res) => {
     const upcomingevent = await UpcomingEvents.find({ "title": req.params.title });
 
-    if (!upcomingevent) return res.status(404).send('The Event with the given ID was not found.');
+    if (!upcomingevent) return res.status(404).send('The Upcoming Event with the given ID was not found.');
 
     res.status(200).send(upcomingevent);
 
+};
+
+exports.getOneEvent = async (req, res) => {
+    const upcomingevent = await UpcomingEvents.findById(req.params.id);
+    if (!upcomingevent) return res.status(404).send('The Upcoming Event with the given ID was not found.');
+
+    res.send(upcomingevent);
 };

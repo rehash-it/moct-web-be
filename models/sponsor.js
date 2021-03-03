@@ -1,11 +1,13 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 const { boolean, string } = require('joi');
+const Advertisement = require('./advertisement');
+
 const sponsorSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique:true,
+        unique: true,
     },
     spClass: {
         type: mongoose.Schema.Types.ObjectId,
@@ -45,6 +47,17 @@ const sponsorSchema = new mongoose.Schema({
     }
 });
 
+sponsorSchema.pre('remove', async function (next) {
+    try {
+        await Advertisement.Advertisement.find({ 'sponsor': this._id })
+            .then((ads) => {
+                Promise.all(ads.map(ad => ad.remove()))
+                    .then(next());
+            });
+    } catch (error) {
+        next(error);
+    }
+});
 
 const Sponsor = mongoose.model('Sponsor', sponsorSchema);
 
