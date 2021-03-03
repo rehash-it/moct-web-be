@@ -102,6 +102,7 @@ app.use('/api',router.get('/gallery/:id',asyncMiddleware(galleryController.getGa
 app.use('/api',router.put('/gallery/:id',[auth],asyncMiddleware(galleryController.updateGallery)));
 app.use('/api',router.delete('/gallery/:id',[auth],asyncMiddleware(galleryController.deleteGallery)));
 app.use('/api',router.put('/gallery/status/:data',[auth],asyncMiddleware(galleryController.updateGalleryStatus)));
+app.use('/api',router.get('/galleryreq/',asyncMiddleware(galleryController.getGalleryByReqStatus)));
 
 app.use('/api',router.post('/lookup',[auth],asyncMiddleware(lookupController.createLookup)));
 app.use('/api',router.get('/lookup',asyncMiddleware(lookupController.getLookup)));
@@ -131,11 +132,13 @@ app.use('/api',router.delete('/advertisement/:id',[auth],asyncMiddleware(adverti
 app.use('/api',router.post('/upcomingevent',[auth],asyncMiddleware(upcomingeventsController.createUpcomingEvent)));
 app.use('/api',router.get('/upcomingevent',asyncMiddleware(upcomingeventsController.getUpcomingEvent)));
 app.use('/api',router.get('/upcomingevent/:type',asyncMiddleware(upcomingeventsController.getUpcomingEventByTitle)));
+app.use('/api',router.get('/upcomingevent/:id',asyncMiddleware(upcomingeventsController.getOneEvent)));
 app.use('/api',router.put('/upcomingevent/:id',[auth],asyncMiddleware(upcomingeventsController.updateUpcomingEvent)));
 app.use('/api',router.delete('/upcomingevent/:id',[auth],asyncMiddleware(upcomingeventsController.deleteUpcomingEvent)));
 
 app.use('/api',router.post('/faq',[auth],asyncMiddleware(faqController.createFaq)));
 app.use('/api',router.get('/faq',asyncMiddleware(faqController.getFaq)));
+app.use('/api',router.get('/faq/:id',asyncMiddleware(faqController.getFaqById)));
 app.use('/api',router.get('/faq/:type',asyncMiddleware(faqController.getFAQByQuestion)));
 app.use('/api',router.put('/faq/:id',[auth],asyncMiddleware(faqController.updateFaq)));
 app.use('/api',router.delete('/faq/:id',[auth],asyncMiddleware(faqController.deleteFaq)));
