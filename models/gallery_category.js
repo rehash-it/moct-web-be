@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
+const Gallery = require('./gallery');
 const galleryCategorySchema = new mongoose.Schema({
  description: {
     type: String,
@@ -8,6 +9,18 @@ const galleryCategorySchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
+  }
+});
+
+galleryCategorySchema.pre('remove', async function (next) {
+  try {
+      await Gallery.Gallery.find({ 'category': this._id })
+          .then((galleries) => {
+              Promise.all(galleries.map(gal => gal.remove()))
+                  .then(next());
+          });
+  } catch (error) {
+      next(error);
   }
 });
 
