@@ -81,3 +81,12 @@ exports.getAdvertisementById = async (req, res) => {
 
     res.send(advertisement);
 };
+exports.getAdsByReqStatus = async (req, res) => {
+
+    const advertisement = await Advertisement.find({ "status": "REQUEST" });
+  
+    if (!advertisement) return res.status(404).send('Advertisements with the given status was not found.');
+  
+    res.send(advertisement);
+  
+  };

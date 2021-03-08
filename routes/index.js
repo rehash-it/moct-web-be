@@ -128,6 +128,7 @@ app.use('/api',router.get('/advertisement/:id',asyncMiddleware(advertisementCont
 app.use('/api',router.get('/advertisement/:id',asyncMiddleware(advertisementController.getAdvertisementBySponsor)));
 app.use('/api',router.put('/advertisement/:id',[auth],asyncMiddleware(advertisementController.updateAdvertisement)));
 app.use('/api',router.delete('/advertisement/:id',[auth],asyncMiddleware(advertisementController.deleteAdvertisement)));
+app.use('/api',router.get('/advertisementreq/',asyncMiddleware(advertisementController.getAdsByReqStatus)));
 
 app.use('/api',router.post('/upcomingevent',[auth],asyncMiddleware(upcomingeventsController.createUpcomingEvent)));
 app.use('/api',router.get('/upcomingevent',asyncMiddleware(upcomingeventsController.getUpcomingEvent)));
