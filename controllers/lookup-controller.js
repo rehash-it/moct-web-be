@@ -43,3 +43,10 @@ exports.getLookupByType = async (req, res) => {
     res.status(200).send(lookup);
 
 };
+exports.getLookupById = async (req, res) => {
+    const lookup = await Lookup.findById(req.params.id);
+
+    if (!lookup) return res.status(404).send('The Lookup with the given ID was not found.');
+
+    res.send(lookup);
+};

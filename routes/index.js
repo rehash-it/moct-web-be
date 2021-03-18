@@ -109,11 +109,13 @@ app.use('/api',router.get('/lookup',asyncMiddleware(lookupController.getLookup))
 app.use('/api',router.get('/lookup/:type',asyncMiddleware(lookupController.getLookupByType)));
 app.use('/api',router.put('/lookup/:id',[auth],asyncMiddleware(lookupController.updateLookup)));
 app.use('/api',router.delete('/lookup/:id',[auth],asyncMiddleware(lookupController.deleteLookup)));
+app.use('/api',router.get('/lookupid/:id',asyncMiddleware(lookupController.getLookupById)));
 
 app.use('/api',router.post('/event',[auth],asyncMiddleware(eventController.createEvent)));
 app.use('/api',router.get('/event',asyncMiddleware(eventController.getEvent)));
 app.use('/api',router.put('/event/:id',[auth],asyncMiddleware(eventController.updateEvent)));
 app.use('/api',router.delete('/event/:id',[auth],asyncMiddleware(eventController.deleteEvent)));
+app.use('/api',router.get('/event/:id',asyncMiddleware(eventController.getEventById)));
 
 app.use('/api',router.post('/sponsor',[auth],asyncMiddleware(sponsorController.createSponsor)));
 app.use('/api',router.get('/sponsor',asyncMiddleware(sponsorController.getSponsor)));

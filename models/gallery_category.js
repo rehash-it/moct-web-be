@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const Gallery = require('./gallery');
 const galleryCategorySchema = new mongoose.Schema({
  description: {
-    type: String,
+    type: String,    
+    required: true,
   },
  fileurl:{
     type: String,
@@ -28,7 +29,7 @@ const GalleryCategory = mongoose.model('GalleryCategory', galleryCategorySchema)
 
 function validateGalleryCategory(galleryCategory) {
   const schema = Joi.object({
-    description: Joi.string().min(5),
+    description: Joi.string().required(),
     fileurl: Joi.string().required()
   });
   const validation = schema.validate(galleryCategory);
