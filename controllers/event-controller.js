@@ -54,3 +54,10 @@ exports.deleteEvent = async function (req, res, next) {
         res.status(200).send(event);
     });
 };
+exports.getEventById = async (req, res) => {
+    const event = await Event.findById(req.params.id);
+
+    if (!event) return res.status(404).send('The Event Type with the given ID was not found.');
+
+    res.send(event);
+};
