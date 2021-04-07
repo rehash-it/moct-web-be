@@ -1,32 +1,36 @@
-const Joi = require('joi');
+
 const keys=require('./config/keys');
-Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
 const express = require('express');
-const fileUpload = require('express-fileupload');
 const app = express();
 var cors = require('cors');
+var multer = require('multer')
 app.use(cors());
 app.use(express.static('public'));
-app.use(fileUpload());
+
 require('./routes/index')(app);
-
-app.use('/public', express.static(__dirname + "/public"));
-
-app.post('/api/upload', (req, res) => {
-  if (!req.files) {
-      return res.status(500).send({ msg: "file is not found" })
-  }
-  const myFile = req.files.file;
-  myFile.mv(`${__dirname}/public/${myFile.name}`, function (err) {
-      if (err) {
-          console.log(err)
-          return res.status(500).send({ msg: "Error occured" });
-      }
-      return res.send({name: myFile.name, path: `/${myFile.name}`});
-  });
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, 'public')
+},
+filename: function (req, file, cb) {
+  cb(null, Date.now() + '-' +file.originalname )
+}
 })
+var upload = multer({ storage: storage }).single('file')
+app.post('/upload',function(req, res) {
+     
+  upload(req, res, function (err) {
+         if (err instanceof multer.MulterError) {
+             return res.status(500).json(err)
+         } else if (err) {
+             return res.status(500).json(err)
+         }
+    return res.status(200).send(req.file)
 
+  })
+
+});
 if (!keys.jwtPrivateKey) {
   console.error('FATAL ERROR: jwtPrivateKey is not defined.');
   process.exit(1);

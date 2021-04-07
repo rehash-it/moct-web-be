@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
-const subscriberRequestSchema = require('../models/subscriber_request');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -31,18 +30,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     default:true,
   },
-
-  // isAdmin: Boolean,
-  // isActive: Boolean,
-
-  loginLink: {
-    type: String,
-    required: false,
-    unique: true
-  },
-  subscriberRequest: {
-    type: subscriberRequestSchema
-  },
+ 
   createdAt: {
     type: Date,
     default: Date.now
