@@ -4,7 +4,7 @@ const { User, validateUser } = require('../models/user');
 
 
 exports.getUser = async (req, res) => {
-  const user = await User.findById(req.user._id).select('-password');
+  const user = await User.find();
   res.send(user);
 }
 

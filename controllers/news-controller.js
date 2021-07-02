@@ -1,20 +1,20 @@
 const { now } = require("lodash");
 const { News, validateNews } = require("../models/news");
 const APIFeatures = require("./../utils/APIFeatures");
-
+var baseURL = require("../constants");
 exports.getNews = async (req, res) => {
-//   const apiFeatures = new APIFeatures(News.find({"start_date": {"$gte": now(), "$lt": end_date}}), req.query)
-  const apiFeatures = new APIFeatures(News.find(), req.query) 
-  .filter()
+  //   const apiFeatures = new APIFeatures(News.find({"start_date": {"$gte": now(), "$lt": end_date}}), req.query)
+  const apiFeatures = new APIFeatures(News.find(), req.query)
+    .filter()
     .sort()
     .limitFields()
     .paginate();
-
+  const docCount = await News.find().countDocuments(); /* NOTE: THIS WORKS!! */
   const news = await apiFeatures.query;
   if (!news)
     return res.status(404).send("No news(s) found with the provided data.");
 
-  res.status(200).send(news);
+  res.status(200).send([news, docCount]);
 };
 
 exports.createNews = async (req, res) => {
@@ -26,7 +26,7 @@ exports.createNews = async (req, res) => {
     content: req.body.content,
     startDate: req.body.startDate,
     endDate: req.body.endDate,
-    image:"/uploads/"+ req.file.filename,
+    image: baseURL.baseURL + "/uploads/" + req.file.filename,
   });
   news = await news.save();
 
@@ -44,7 +44,7 @@ exports.updateNews = async (req, res) => {
       content: req.body.content,
       startDate: req.body.startDate,
       endDate: req.body.endDate,
-      image:"/uploads/"+ req.file.filename,
+      image: baseURL.baseURL + "/uploads/" + req.file.filename,
     },
     {
       new: true,

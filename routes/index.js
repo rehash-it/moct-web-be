@@ -6,6 +6,8 @@ const admin = require("../middleware/admin");
 const authController = require("../controllers/auth-controller");
 const userController = require("../controllers/user-controller");
 const newsController = require("../controllers/news-controller");
+const docsController = require("../controllers/docs-controller");
+const bidsController = require("../controllers/bids-controller");
 
 const error = require("../middleware/error");
 const multer = require("multer");
@@ -33,7 +35,14 @@ module.exports = function (app) {
       next();
     })
   );
-
+  app.use(
+    "/uploads",
+    router.all("/", function (req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      next();
+    })
+  );
   app.use(
     "/api",
     router.all("/me", function (req, res, next) {
@@ -52,9 +61,27 @@ module.exports = function (app) {
     })
   );
 
-   app.use(
+  app.use(
     "/api",
     router.all("/news", function (req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      next();
+    })
+  );
+
+  app.use(
+    "/api",
+    router.all("/docs", function (req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      next();
+    })
+  );
+
+  app.use(
+    "/api",
+    router.all("/bid", function (req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "X-Requested-With");
       next();
@@ -78,7 +105,7 @@ module.exports = function (app) {
   );
   app.use(
     "/api",
-    router.get("/user", [auth, admin], asyncMiddleware(userController.getUsers))
+    router.get("/user",  asyncMiddleware(userController.getUser))
   );
   app.use(
     "/api",
@@ -143,5 +170,72 @@ module.exports = function (app) {
     router.get("/news/:id", asyncMiddleware(newsController.getNewsById))
   );
 
+
+
+
+
+  app.use(
+    "/api",
+    router.post(
+      "/docs",
+      upload.single("file"),
+      asyncMiddleware(docsController.createDocs)
+    )
+  );
+  app.use("/api", router.get("/docs", asyncMiddleware(docsController.getDocs)));
+  app.use(
+    "/api",
+    router.put(
+      "/docs/:id",
+      upload.single("file"),
+      asyncMiddleware(docsController.updateDocs)
+    )
+  );
+  app.use(
+    "/api",
+    router.delete(
+      "/docs/:id",
+      [auth],
+      asyncMiddleware(docsController.deleteDocs)
+    )
+  );
+  app.use(
+    "/api",
+    router.get("/docs/:id", asyncMiddleware(docsController.getDocsById))
+  );
+  
+
+
+
+
+  app.use(
+    "/api",
+    router.post(
+      "/bid",
+      upload.single("file"),
+      asyncMiddleware(bidsController.createBid)
+    )
+  );
+  app.use("/api", router.get("/bid", asyncMiddleware(bidsController.getBids)));
+  app.use(
+    "/api",
+    router.put(
+      "/bid/:id",
+      upload.single("file"),
+      asyncMiddleware(bidsController.updateBid)
+    )
+  );
+  app.use(
+    "/api",
+    router.delete(
+      "/bid/:id",
+      [auth],
+      asyncMiddleware(bidsController.deleteBid)
+    )
+  );
+  app.use(
+    "/api",
+    router.get("/bid/:id", asyncMiddleware(bidsController.getBidById))
+  );
   app.use(error);
 };

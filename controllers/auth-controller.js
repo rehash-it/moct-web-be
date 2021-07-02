@@ -4,6 +4,7 @@ const _ = require('lodash');
 const {User} = require('../models/user');
 
 exports.auth=async (req, res) => {
+  console.log(req);
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
   

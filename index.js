@@ -17,7 +17,9 @@ filename: function (req, file, cb) {
   cb(null, Date.now() + '-' +file.originalname )
 }
 })
-var upload = multer({ storage: storage }).single('file')
+var upload = multer({ storage: storage }).single('file');
+app.use('/uploads', express.static('./uploads'));
+
 app.post('/upload',function(req, res) {
      
   upload(req, res, function (err) {

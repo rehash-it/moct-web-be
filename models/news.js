@@ -44,7 +44,7 @@ function validateNews(news) {
     content: Joi.string().min(10).required(),
     startDate:Joi.date(),
     endDate: Joi.date(),
-    // image : Joi.string(),
+    // image : Joi.required(),
   });
   const validation = schema.validate(news);
   return validation;
