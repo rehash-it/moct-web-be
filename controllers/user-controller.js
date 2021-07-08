@@ -9,6 +9,7 @@ exports.getUser = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
+  try{
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -22,6 +23,11 @@ exports.createUser = async (req, res) => {
 
   const token = user.generateAuthToken();
   res.header('x-auth-token', token).send(_.pick(user, ['_id', 'username', 'isAdmin', 'isActive']));
+
+  }
+  catch(err){
+console.log(err)    
+  }
 };
 
 exports.updateUser = async (req, res) => {

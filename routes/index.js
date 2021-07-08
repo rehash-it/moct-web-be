@@ -105,7 +105,7 @@ module.exports = function (app) {
   );
   app.use(
     "/api",
-    router.get("/user",  asyncMiddleware(userController.getUser))
+    router.get("/user", asyncMiddleware(userController.getUser))
   );
   app.use(
     "/api",
@@ -203,7 +203,7 @@ module.exports = function (app) {
     "/api",
     router.get("/docs/:id", asyncMiddleware(docsController.getDocsById))
   );
-  
+
 
 
 

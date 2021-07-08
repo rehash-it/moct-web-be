@@ -29,7 +29,8 @@ const newsSchema = new mongoose.Schema({
   image: {
     type: String
   },
- 
+  fb: String,
+  twitter: String,
   createdAt: {
     type: Date,
     default: Date.now
@@ -42,7 +43,7 @@ function validateNews(news) {
   const schema = Joi.object({
     title: Joi.string().min(5).max(255).required(),
     content: Joi.string().min(10).required(),
-    startDate:Joi.date(),
+    startDate: Joi.date(),
     endDate: Joi.date(),
     // image : Joi.required(),
   });
