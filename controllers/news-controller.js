@@ -14,7 +14,7 @@ exports.getNews = async (req, res) => {
   if (!news)
     return res.status(404).send("No news(s) found with the provided data.");
 
-  res.status(200).send([news, docCount]);
+  res.status(200).send([news.reverse(), docCount]);
 };
 
 exports.createNews = async (req, res) => {

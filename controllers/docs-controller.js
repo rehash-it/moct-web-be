@@ -3,17 +3,15 @@ const { Docs, validateDocs } = require("../models/documents");
 const APIFeatures = require("./../utils/APIFeatures");
 var baseURL = require("../constants");
 exports.getDocs = async (req, res) => {
-  const apiFeatures = new APIFeatures(Docs.find(), req.query)
+  const apiFeatures = new APIFeatures(Docs.find({}), req.query)
     .filter()
     .sort()
     .limitFields()
     .paginate();
   const docCount = await Docs.find().countDocuments(); /* NOTE: THIS WORKS!! */
   const docs = await apiFeatures.query;
-  if (!docs)
-    return res.status(404).send("No documents(s) found with the provided data.");
-
-  res.status(200).send([docs, docCount]);
+  return (!docs ? res.status(404).send("No documents(s) found with the provided data.") :
+    res.status(200).send([docs.reverse(), docCount]))
 };
 
 exports.createDocs = async (req, res) => {
@@ -22,6 +20,7 @@ exports.createDocs = async (req, res) => {
 
   let docs = new Docs({
     title: req.body.title,
+    description: req.body.description,
     file: baseURL.baseURL + "/uploads/" + req.file.filename,
   });
   docs = await docs.save();
