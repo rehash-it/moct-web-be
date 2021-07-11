@@ -8,7 +8,7 @@ const userController = require("../controllers/user-controller");
 const newsController = require("../controllers/news-controller");
 const docsController = require("../controllers/docs-controller");
 const bidsController = require("../controllers/bids-controller");
-
+const vacancyController = require("../controllers/vacancy-controller")
 const error = require("../middleware/error");
 const multer = require("multer");
 var bodyParser = require("body-parser");
@@ -87,7 +87,14 @@ module.exports = function (app) {
       next();
     })
   );
-
+  app.use(
+    "/api",
+    router.all("/vacancy", function (req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      next();
+    })
+  )
   app.use("/api", router.post("/auth", asyncMiddleware(authController.auth)));
 
   app.use(
@@ -236,6 +243,41 @@ module.exports = function (app) {
   app.use(
     "/api",
     router.get("/bid/:id", asyncMiddleware(bidsController.getBidById))
+  );
+  app.use(
+    "/api",
+    router.post(
+      "/bid",
+      upload.single("file"),
+      asyncMiddleware(bidsController.createBid)
+    )
+  );
+  app.use(
+    "/api",
+    router.post(
+      "/vacancy",
+      asyncMiddleware(vacancyController.createVacancy)
+    )
+  );
+  app.use("/api", router.get("/vacancy", asyncMiddleware(vacancyController.getVacancy)));
+  app.use(
+    "/api",
+    router.put(
+      "/vacany/:id",
+      asyncMiddleware(vacancyController.updateVacancy)
+    )
+  );
+  app.use(
+    "/api",
+    router.delete(
+      "/vacancy/:id",
+      [auth],
+      asyncMiddleware(vacancyController.deleteVacancy)
+    )
+  );
+  app.use(
+    "/api",
+    router.get("/vacancy/:id", asyncMiddleware(vacancyController.getVacancyById))
   );
   app.use(error);
 };
