@@ -14,7 +14,7 @@ exports.getBids = async (req, res) => {
   if (!bid)
     return res.status(404).send("No bid(s) found with the provided data.");
 
-  res.status(200).send([bid, docCount]);
+  res.status(200).send([bid.reverse(), docCount]);
 };
 
 exports.createBid = async (req, res) => {
