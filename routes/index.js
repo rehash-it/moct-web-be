@@ -259,11 +259,10 @@ module.exports = function (app) {
       asyncMiddleware(vacancyController.createVacancy)
     )
   );
-  app.use("/api", router.get("/vacancy", asyncMiddleware(vacancyController.getVacancy)));
   app.use(
     "/api",
     router.put(
-      "/vacany/:id",
+      "/vacancy/:id",
       asyncMiddleware(vacancyController.updateVacancy)
     )
   );
@@ -275,6 +274,8 @@ module.exports = function (app) {
       asyncMiddleware(vacancyController.deleteVacancy)
     )
   );
+  app.use("/api", router.get("/vacancy", asyncMiddleware(vacancyController.getVacancy)));
+
   app.use(
     "/api",
     router.get("/vacancy/:id", asyncMiddleware(vacancyController.getVacancyById))

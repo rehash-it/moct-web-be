@@ -11,7 +11,8 @@ exports.getVacancy = async (req, res) => {
         .paginate();
     const docCount = await Vacancy.find().countDocuments(); /* NOTE: THIS WORKS!! */
     const vacancy = await apiFeatures.query;
-    if (!bid)
+    vacancy.reverse()
+    if (!vacancy)
         return res.status(404).send("No vacancy(s) found with the provided data.");
 
     res.status(200).send([vacancy.reverse(), docCount]);
@@ -19,14 +20,15 @@ exports.getVacancy = async (req, res) => {
 
 exports.createVacancy = async (req, res) => {
     const { error } = validateVacancy(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).send(error.details[0].message)
 
     let vacancy = new Vacancy({
         title: req.body.title,
-        instruction: req.body.instruction,
+        description: req.body.description,
         skills: req.body.skills,
         quantity: req.body.quantity,
         endDate: req.body.endDate,
+        experience: req.body.experience
     });
     vacancy = await vacancy.save();
 
@@ -35,13 +37,15 @@ exports.createVacancy = async (req, res) => {
 
 exports.updateVacancy = async (req, res) => {
     const { error } = validateVacancy(req.body);
+
+    console.log(error)
     if (error) return res.status(400).send(error.details[0].message);
 
     const vacancy = await Vacancy.findByIdAndUpdate(
         req.params.id,
         {
             title: req.body.title,
-            instruction: req.body.instruction,
+            description: req.body.description,
             skills: req.body.skills,
             quantity: req.body.quantity,
             endDate: req.body.endDate,
@@ -58,7 +62,6 @@ exports.updateVacancy = async (req, res) => {
 
 exports.deleteVacancy = async (req, res) => {
     const vacancy = await Vacancy.findByIdAndRemove(req.params.id);
-
     if (!vacancy)
         return res.status(404).send("The Bid with the given ID was not found.");
 

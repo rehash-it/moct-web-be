@@ -11,7 +11,7 @@ const vacancySchema = new mongoose.Schema({
         maxlength: 255
     },
 
-    instruction: {
+    description: {
         type: String,
         required: true,
         minlength: 10
@@ -19,9 +19,12 @@ const vacancySchema = new mongoose.Schema({
 
     skills: {
         type: String,
-        required: true
     },
     quantity: { //requires quantity
+        type: Number,
+        required: true
+    },
+    experience: {
         type: Number,
         required: true
     },
@@ -40,8 +43,12 @@ const Vacancy = mongoose.model('Vacancy', vacancySchema);
 function validateVacancy(vacancy) {
     const schema = Joi.object({
         title: Joi.string().min(5).max(255).required(),
-        instruction: Joi.string().min(10).required(),
+        description: Joi.string().min(10).required(),
+        quantity: Joi.number(),
+        skills: Joi.allow(''),
+        experience: Joi.number(),
         endDate: Joi.date(),
+        createdAt: Joi.allow()
         // image : Joi.required(),
     });
     const validation = schema.validate(vacancy);
