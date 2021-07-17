@@ -17,10 +17,6 @@ const bidSchema = new mongoose.Schema({
     minlength: 10
   },
 
-  startDate: {
-    type: Date,
-    default: Date.now
-  },
   endDate: {
     type: Date,
     default: Date.now
@@ -29,7 +25,7 @@ const bidSchema = new mongoose.Schema({
   file: {
     type: String
   },
- 
+
   createdAt: {
     type: Date,
     default: Date.now
@@ -42,8 +38,8 @@ function validateBid(bid) {
   const schema = Joi.object({
     title: Joi.string().min(5).max(255).required(),
     instruction: Joi.string().min(10).required(),
-    startDate:Joi.date(),
     endDate: Joi.date(),
+    file: Joi.allow()
     // image : Joi.required(),
   });
   const validation = schema.validate(bid);

@@ -19,6 +19,8 @@ exports.getBids = async (req, res) => {
 
 exports.createBid = async (req, res) => {
   const { error } = validateBid(req.body);
+  console.log(error)
+
   if (error) return res.status(400).send(error.details[0].message);
 
   let bid = new Bid({
@@ -41,10 +43,10 @@ exports.updateBid = async (req, res) => {
     req.params.id,
     {
       title: req.body.title,
-      content: req.body.content,
+      instruction: req.body.instruction,
       startDate: req.body.startDate,
       endDate: req.body.endDate,
-      image: baseURL.baseURL + "/uploads/" + req.file.filename,
+      image: baseURL.baseURL + "/uploads/" + (req.file.mimetype !== '//localhost' ? req.file.filename : req.file.originalname),
     },
     {
       new: true,
@@ -58,7 +60,7 @@ exports.updateBid = async (req, res) => {
 };
 
 exports.deleteBid = async (req, res) => {
-  const news = await Bid.findByIdAndRemove(req.params.id);
+  const bid = await Bid.findByIdAndRemove(req.params.id);
 
   if (!bid)
     return res.status(404).send("The Bid with the given ID was not found.");

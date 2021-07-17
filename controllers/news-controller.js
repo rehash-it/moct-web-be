@@ -11,6 +11,7 @@ exports.getNews = async (req, res) => {
     .paginate();
   const docCount = await News.find().countDocuments(); /* NOTE: THIS WORKS!! */
   const news = await apiFeatures.query;
+  news.reverse()
   if (!news)
     return res.status(404).send("No news(s) found with the provided data.");
 
@@ -19,12 +20,13 @@ exports.getNews = async (req, res) => {
 
 exports.createNews = async (req, res) => {
   const { error } = validateNews(req.body);
+  console.log(error)
+
   if (error) return res.status(400).send(error.details[0].message);
 
   let news = new News({
     title: req.body.title,
     content: req.body.content,
-    startDate: req.body.startDate,
     endDate: req.body.endDate,
     image: baseURL.baseURL + "/uploads/" + req.file.filename,
   });
@@ -35,16 +37,16 @@ exports.createNews = async (req, res) => {
 
 exports.updateNews = async (req, res) => {
   const { error } = validateNews(req.body);
+  console.log(error)
   if (error) return res.status(400).send(error.details[0].message);
-
+  console.log(req.file)
   const news = await News.findByIdAndUpdate(
     req.params.id,
     {
       title: req.body.title,
       content: req.body.content,
-      startDate: req.body.startDate,
       endDate: req.body.endDate,
-      image: baseURL.baseURL + "/uploads/" + req.file.filename,
+      image: baseURL.baseURL + "/uploads/" + (req.file.mimetype !== '//localhost' ? req.file.filename : req.file.originalname)
     },
     {
       new: true,
