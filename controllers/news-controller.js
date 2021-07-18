@@ -39,7 +39,6 @@ exports.updateNews = async (req, res) => {
   const { error } = validateNews(req.body);
   console.log(error)
   if (error) return res.status(400).send(error.details[0].message);
-  console.log(req.file)
   const news = await News.findByIdAndUpdate(
     req.params.id,
     {

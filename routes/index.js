@@ -9,6 +9,7 @@ const newsController = require("../controllers/news-controller");
 const docsController = require("../controllers/docs-controller");
 const bidsController = require("../controllers/bids-controller");
 const vacancyController = require("../controllers/vacancy-controller")
+const siteController = require("../controllers/site-controller")
 const error = require("../middleware/error");
 const multer = require("multer");
 var bodyParser = require("body-parser");
@@ -24,8 +25,8 @@ var upload = multer({ storage: storage });
 module.exports = function (app) {
   app.use(express.json());
 
-  app.use(bodyParser.json({ limit: "50mb" }));
-  app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
+  app.use(bodyParser.json({ limit: "100mb" }));
+  app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 
   app.use(
     "/api",
@@ -90,6 +91,15 @@ module.exports = function (app) {
   app.use(
     "/api",
     router.all("/vacancy", function (req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      next();
+    })
+  )
+  app.use(
+    "/api",
+    router.all("/site", function (req, res, next) {
+
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "X-Requested-With");
       next();
@@ -280,5 +290,37 @@ module.exports = function (app) {
     "/api",
     router.get("/vacancy/:id", asyncMiddleware(vacancyController.getVacancyById))
   );
+  /** */
+  app.use(
+    "/api",
+    router.post(
+      "/site",
+      upload.array('images', 30),
+      asyncMiddleware(siteController.createSite)
+    )
+  );
+  app.use(
+    "/api",
+    router.put(
+      "/site/:id",
+      upload.array('images', 30),
+      asyncMiddleware(siteController.updateSite)
+    )
+  );
+  app.use(
+    "/api",
+    router.delete(
+      "/site/:id",
+      [auth],
+      asyncMiddleware(siteController.deleteSite)
+    )
+  );
+  app.use("/api", router.get("/site", asyncMiddleware(siteController.getSites)));
+
+  app.use(
+    "/api",
+    router.get("/site/:id", asyncMiddleware(siteController.getSiteById))
+  );
+  /** */
   app.use(error);
 };
