@@ -16,6 +16,7 @@ exports.getDocs = async (req, res) => {
 
 exports.createDocs = async (req, res) => {
   const { error } = validateDocs(req.body);
+  console.log(error)
   if (error) return res.status(400).send(error.details[0].message);
 
   let docs = new Docs({
@@ -36,7 +37,7 @@ exports.updateDocs = async (req, res) => {
     req.params.id,
     {
       title: req.body.title,
-      file: baseURL.baseURL + "/uploads/" + req.file.filename,
+      file: baseURL.baseURL + "/uploads/" + (req.file.mimetype !== '//localhost' ? req.file.filename : req.file.originalname),
     },
     {
       new: true,
@@ -50,6 +51,8 @@ exports.updateDocs = async (req, res) => {
 };
 
 exports.deleteDocs = async (req, res) => {
+  const find = await Docs.find({ _id: req.params.id })
+  deleteFile(find[0].file)
   const docs = await Docs.findByIdAndRemove(req.params.id);
 
   if (!docs)

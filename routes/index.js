@@ -13,6 +13,7 @@ const siteController = require("../controllers/site-controller")
 const error = require("../middleware/error");
 const multer = require("multer");
 var bodyParser = require("body-parser");
+const check = require("../middleware/check");
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -156,7 +157,9 @@ module.exports = function (app) {
       asyncMiddleware(userController.deleteUser)
     )
   );
-
+  /** check the user after login*/
+  app.use('/api', router.post('/checkAdmin', [auth], check))
+  /** */
   app.use(
     "/api",
     router.post(
