@@ -157,6 +157,14 @@ module.exports = function (app) {
       asyncMiddleware(userController.deleteUser)
     )
   );
+  app.use(
+    "/api",
+    router.put(
+      "/changePassword/:id",
+      authController.changePassword,
+      asyncMiddleware(userController.updateUser)
+    )
+  );
   /** check the user after login*/
   app.use('/api', router.post('/checkAdmin', [auth], check))
   /** */

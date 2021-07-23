@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User, validateUser } = require('../models/user');
-
+const { removeItem } = require('../middleware/remover')
 
 exports.getUser = async (req, res) => {
   const user = await User.find();
@@ -9,29 +9,32 @@ exports.getUser = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-  try{
-  const { error } = validateUser(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  try {
+    const admin = { ...req.body, isAdmin: true, isActive: true }
+    const { error } = validateUser(admin);
+    console.log(error)
+    if (error) return res.status(400).send(error.details[0].message);
 
-  let user = await User.findOne({ username: req.body.email });
-  if (user) return res.status(400).send('User already registered.');
+    let user = await User.findOne({ username: req.body.username });
+    if (user) return res.status(400).send('User already registered.');
 
-  user = new User(_.pick(req.body, ['username', 'password', 'isAdmin', 'isActive']));
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(user.password, salt);
-  await user.save();
+    user = new User(_.pick(req.body, ['username', 'password', 'isAdmin', 'isActive']));
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+    await user.save();
 
-  const token = user.generateAuthToken();
-  res.header('x-auth-token', token).send(_.pick(user, ['_id', 'username', 'isAdmin', 'isActive']));
+    const token = user.generateAuthToken();
+    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'username', 'isAdmin', 'isActive']));
 
   }
-  catch(err){
-console.log(err)    
+  catch (err) {
+    console.log(err)
   }
 };
 
 exports.updateUser = async (req, res) => {
-  const { error } = validateUser(req.body);
+  const { error } = validateUser(removeItem(req.body, ['_id', 'new', 'createdAt', '__v', 'oldPassword']));
+  console.log(error)
   if (error) return res.status(400).send(error.details[0].message);
 
   // let user = await User.findOne({ username: req.body.username });
@@ -43,7 +46,7 @@ exports.updateUser = async (req, res) => {
 
   user = await User.findByIdAndUpdate(req.params.id, {
     username: user.username,
-    password: user.password,
+    password: req.body.new ? user.password : req.body.password,
     isAdmin: user.isAdmin,
     isActive: user.isActive
   }, {
@@ -72,4 +75,5 @@ exports.getUserById = async (req, res) => {
 
   res.send(user);
 };
+
 

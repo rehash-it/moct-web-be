@@ -2,7 +2,11 @@ const { now } = require("lodash");
 const { News, validateNews } = require("../models/news");
 const APIFeatures = require("./../utils/APIFeatures");
 var baseURL = require("../constants");
+const { checkDate } = require("../middleware/date");
 exports.getNews = async (req, res) => {
+  const { admin } = req.headers
+  console.log(admin)
+
   //   const apiFeatures = new APIFeatures(News.find({"start_date": {"$gte": now(), "$lt": end_date}}), req.query)
   const apiFeatures = new APIFeatures(News.find(), req.query)
     .filter()
@@ -11,11 +15,16 @@ exports.getNews = async (req, res) => {
     .paginate();
   const docCount = await News.find().countDocuments(); /* NOTE: THIS WORKS!! */
   const news = await apiFeatures.query;
+  let validNews = news.filter(n => {
+    return checkDate(Date.now(), n.endDate)
+  }
+  )
+  validNews.reverse()
   news.reverse()
   if (!news)
     return res.status(404).send("No news(s) found with the provided data.");
 
-  res.status(200).send([news.reverse(), docCount]);
+  res.status(200).send([admin ? news.reverse() : validNews.reverse(), docCount]);
 };
 
 exports.createNews = async (req, res) => {

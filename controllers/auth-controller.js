@@ -16,9 +16,18 @@ exports.auth = async (req, res) => {
   if (!validPassword) return res.status(400).send('Invalid username or password.');
 
   const token = user.generateAuthToken();
-  res.send(token);
+  res.send({ token, id: user._id, auth: true });
 }
+exports.changePassword = async (req, res, next) => {
+  let user = await User.findOne({ _id: req.body._id });
+  const validPassword = await bcrypt.compare(req.body.oldPassword, user.password);
+  if (!user) return res.status(400).send('Invalid username or password.');
 
+  if (!user.isActive) return res.status(400).send('Your account is currently Inactive. Please contact system adminstrator.');
+
+  if (!validPassword) return res.status(400).send('Invalid username or password.');
+  next();
+}
 function validate(req) {
   const schema = Joi.object({
     username: Joi.string().min(5).max(255).required(),
