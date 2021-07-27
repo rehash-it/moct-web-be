@@ -23,13 +23,13 @@ exports.createSite = async (req, res) => {
 
     const { error } = validateSite(req.body);
     console.log(error)
-
     if (error) return res.status(400).send(error.details[0].message);
     let sites = new Site({
         title: req.body.title,
         description: req.body.description,
         region: req.body.region,
-        location: req.body.location,
+        lat: req.body.lat,
+        lng: req.body.lng,
         images: req.files.map(f => baseURL.baseURL + "/uploads/" + f.filename),
     });
     sites = await sites.save();
@@ -47,7 +47,8 @@ exports.updateSite = async (req, res) => {
             title: req.body.title,
             description: req.body.description,
             region: req.body.region,
-            location: req.body.location,
+            lat: req.body.lat,
+            lng: req.body.lng,
             images: req.files.map(f => baseURL.baseURL + "/uploads/" + (f.mimetype !== '//localhost' ? f.filename : f.originalname)),
         },
         {
