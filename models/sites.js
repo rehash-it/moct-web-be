@@ -18,8 +18,8 @@ const siteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    lat: Number,
-    lng: Number,
+    lat: String,
+    lng: String,
 
     createdAt: {
         type: Date,
@@ -34,8 +34,8 @@ function validateSite(Site) {
         title: Joi.string().max(255).required(),
         description: Joi.string().min(10).required(),
         region: Joi.string().max(15),
-        lat: Joi.number().allow(''),
-        lng: Joi.number().allow(''),
+        lat: Joi.string().allow(''),
+        lng: Joi.string().allow(''),
         images: Joi.allow()
         // image : Joi.required(),
     });

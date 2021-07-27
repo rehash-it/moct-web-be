@@ -5,7 +5,6 @@ var baseURL = require("../constants");
 const { checkDate } = require("../middleware/date");
 exports.getNews = async (req, res) => {
   const { admin } = req.headers
-  console.log(admin)
 
   //   const apiFeatures = new APIFeatures(News.find({"start_date": {"$gte": now(), "$lt": end_date}}), req.query)
   const apiFeatures = new APIFeatures(News.find(), req.query)
@@ -28,7 +27,6 @@ exports.getNews = async (req, res) => {
 };
 
 exports.createNews = async (req, res) => {
-  console.log(req.body.lacation)
   const { error } = validateNews(req.body);
 
 

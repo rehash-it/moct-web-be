@@ -11,7 +11,7 @@ exports.auth = async (req, res) => {
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!user) return res.status(400).send('Invalid username or password.');
 
-  if (!user.isActive) return res.status(400).send('Your account is currently Inactive. Please contact system adminstrator.');
+  if (!user.isActive || (!user.isAdmin)) return res.status(400).send('Your account is currently Inactive. Please contact system adminstrator.');
 
   if (!validPassword) return res.status(400).send('Invalid username or password.');
 
@@ -23,7 +23,7 @@ exports.changePassword = async (req, res, next) => {
   const validPassword = await bcrypt.compare(req.body.oldPassword, user.password);
   if (!user) return res.status(400).send('Invalid username or password.');
 
-  if (!user.isActive) return res.status(400).send('Your account is currently Inactive. Please contact system adminstrator.');
+  if (!user.isActive || (!user.isAdmin)) return res.status(400).send('Your account is currently Inactive. Please contact system adminstrator.');
 
   if (!validPassword) return res.status(400).send('Invalid username or password.');
   next();
