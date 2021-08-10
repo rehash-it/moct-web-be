@@ -9,6 +9,7 @@ const newsController = require("../controllers/news-controller");
 const docsController = require("../controllers/docs-controller");
 const bidsController = require("../controllers/bids-controller");
 const vacancyController = require("../controllers/vacancy-controller")
+const searchController = require("../controllers/search-controller")
 const siteController = require("../controllers/site-controller")
 const error = require("../middleware/error");
 const multer = require("multer");
@@ -331,6 +332,10 @@ module.exports = function (app) {
   app.use(
     "/api",
     router.get("/site/:id", asyncMiddleware(siteController.getSiteById))
+  );
+  app.use(
+    "/api",
+    router.post("/search/:index", asyncMiddleware(searchController.search))
   );
   /** */
   app.use(error);
