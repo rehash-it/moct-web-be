@@ -7,4 +7,4 @@ const durationDays = (initial_date, destination_date) => {
 }
 /**accepts initial date and destination date and check duration is valid */
 exports.checkDate = (initial_date, destination_date) =>
-    durationDays(initial_date, destination_date) <= 0 ? false : true
+    durationDays(initial_date, destination_date) >= 0
