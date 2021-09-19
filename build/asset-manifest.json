@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9377504a.chunk.css",
+    "main.js": "/static/js/main.e2657b0b.chunk.js",
+    "main.js.map": "/static/js/main.e2657b0b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.dc0b561b.js",
+    "runtime-main.js.map": "/static/js/runtime-main.dc0b561b.js.map",
+    "static/css/2.49d060fe.chunk.css": "/static/css/2.49d060fe.chunk.css",
+    "static/js/2.ceb6ac4e.chunk.js": "/static/js/2.ceb6ac4e.chunk.js",
+    "static/js/2.ceb6ac4e.chunk.js.map": "/static/js/2.ceb6ac4e.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.49d060fe.chunk.css.map": "/static/css/2.49d060fe.chunk.css.map",
+    "static/css/main.9377504a.chunk.css.map": "/static/css/main.9377504a.chunk.css.map",
+    "static/js/2.ceb6ac4e.chunk.js.LICENSE.txt": "/static/js/2.ceb6ac4e.chunk.js.LICENSE.txt",
+    "static/media/Blue-Nile.a135ca03.jpg": "/static/media/Blue-Nile.a135ca03.jpg",
+    "static/media/ET-emblem.e1d78c3f.png": "/static/media/ET-emblem.e1d78c3f.png",
+    "static/media/Hirut.80686463.jpg": "/static/media/Hirut.80686463.jpg",
+    "static/media/MOCT-አማርኛ-Org-struct-min.21c9590b.png": "/static/media/MOCT-አማርኛ-Org-struct-min.21c9590b.png",
+    "static/media/erta ale the smoking mountain of afar.48bd6671.png": "/static/media/erta ale the smoking mountain of afar.48bd6671.png",
+    "static/media/index.css": "/static/media/meskel celebration.f13504c3.png",
+    "static/media/moct-logo-2.4e216842.png": "/static/media/moct-logo-2.4e216842.png",
+    "static/media/styles.css": "/static/media/revicons.e8746a62.woff",
+    "static/media/about.css": "/static/media/semine mountain national park.081513f8.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dc0b561b.js",
+    "static/css/2.49d060fe.chunk.css",
+    "static/js/2.ceb6ac4e.chunk.js",
+    "static/css/main.9377504a.chunk.css",
+    "static/js/main.e2657b0b.chunk.js"
+  ]
+}

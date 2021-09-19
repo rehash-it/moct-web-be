@@ -5,10 +5,11 @@ const express = require('express');
 const app = express();
 var cors = require('cors');
 var multer = require('multer')
+const socketIo = require("socket.io");
+const webSocket = require('./socket/socket');
 app.use(cors());
 app.use(express.static('public'));
 
-require('./routes/index')(app);
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public')
@@ -48,6 +49,17 @@ const connect = (databaseUrl = dbUri) => {
     .then(() => console.log('Database connected'))
     .catch(err => console.error('Database connection failed', err));
 };
-connect();
 
-app.listen(keys.port, () => console.log(`Listening on port ${keys.port}...`));
+
+connect();
+require('./routes/index')(app);
+const server = require("http").createServer(app)
+const io = socketIo(server, {
+  cors: {
+    origin: ["http://192.168.8.101:3000", "http://localhost:3000"],
+    methods: ["GET", "POST", "PUT"],
+  },
+});
+webSocket(io);
+
+server.listen(keys.port, () => console.log(`Listening on port ${keys.port}...`));

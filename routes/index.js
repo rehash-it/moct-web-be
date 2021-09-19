@@ -15,6 +15,7 @@ const error = require("../middleware/error");
 const multer = require("multer");
 var bodyParser = require("body-parser");
 const check = require("../middleware/check");
+const path = require('path')
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -337,6 +338,9 @@ module.exports = function (app) {
     "/api",
     router.post("/search/:index", asyncMiddleware(searchController.search))
   );
-  /** */
+  app.use(express.static(path.join(__dirname, '../build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'))
+  })
   app.use(error);
 };
