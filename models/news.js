@@ -22,8 +22,7 @@ const newsSchema = new mongoose.Schema({
     default: Date.now
   },
 
-  images: [{ type: String, required: true }],
-
+  images: [{ type: String }],
   createdAt: {
     type: Date,
     default: Date.now

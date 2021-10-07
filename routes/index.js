@@ -15,6 +15,10 @@ const error = require("../middleware/error");
 const multer = require("multer");
 var bodyParser = require("body-parser");
 const check = require("../middleware/check");
+const path = require('path');
+const { getAdminConn } = require("../controllers/conn-controller");
+const { createForum, updateForum, deleteForum, getForums, getForum } = require("../controllers/forum-controller");
+const { getComments } = require("../controllers/comment-controller");
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -118,7 +122,7 @@ module.exports = function (app) {
     "/api",
     router.post(
       "/user",
-      // [auth, admin],
+      [auth, admin],
       asyncMiddleware(userController.createUser)
     )
   );
@@ -173,7 +177,7 @@ module.exports = function (app) {
     "/api",
     router.post(
       "/news",
-      upload.single("image"),
+      upload.array('images', 30),
       asyncMiddleware(newsController.createNews)
     )
   );
@@ -182,7 +186,7 @@ module.exports = function (app) {
     "/api",
     router.put(
       "/news/:id",
-      upload.single("image"),
+      upload.array('images', 30),
       asyncMiddleware(newsController.updateNews)
     )
   );
@@ -333,10 +337,25 @@ module.exports = function (app) {
     "/api",
     router.get("/site/:id", asyncMiddleware(siteController.getSiteById))
   );
+
   app.use(
     "/api",
     router.post("/search/:index", asyncMiddleware(searchController.search))
   );
-  /** */
+  //forum
+  app.use('/api', router.get("/forum", asyncMiddleware(getForums)))
+  app.use('/api', router.get("/forum/:id", asyncMiddleware(getForum)))
+  app.use('/api', router.post("/forum", [auth], asyncMiddleware(createForum)))
+  app.use('/api', router.put("/forum/:id", [auth], asyncMiddleware(updateForum)))
+  app.use('/api', router.delete('/forum/:id', [auth], asyncMiddleware(deleteForum)))
+  //comments
+  app.use('/api', router.get('/comment/:id', getComments))
+
+  //chat connection
+  app.use('/api', router.get('/connection/:admin_id', asyncMiddleware(getAdminConn)))
+  app.use(express.static(path.join(__dirname, '../build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'))
+  })
   app.use(error);
 };

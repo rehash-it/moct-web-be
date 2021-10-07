@@ -16,7 +16,7 @@ exports.auth = async (req, res) => {
   if (!validPassword) return res.status(400).send('Invalid username or password.');
 
   const token = user.generateAuthToken();
-  res.send({ token, id: user._id, auth: true });
+  res.send({ token, id: user._id, auth: true, username: user.username });
 }
 exports.changePassword = async (req, res, next) => {
   let user = await User.findOne({ _id: req.body._id });

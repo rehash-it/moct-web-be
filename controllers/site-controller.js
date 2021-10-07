@@ -49,7 +49,7 @@ exports.updateSite = async (req, res) => {
             region: req.body.region,
             lat: req.body.lat,
             lng: req.body.lng,
-            images: req.files.map(f => baseURL.baseURL + "/uploads/" + (f.mimetype !== '//localhost' ? f.filename : f.originalname)),
+            images: req.files.map(f => baseURL.baseURL + "/uploads/" + (f.mimetype === 'image/jpeg' ? f.filename : f.originalname)),
         },
         {
             new: true,
