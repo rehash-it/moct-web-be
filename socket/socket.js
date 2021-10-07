@@ -1,4 +1,3 @@
-
 const { getComment, addComment, deleteComment } = require("../controllers/comment-controller");
 const { connect, disconnect } = require("../controllers/conn-controller");
 const { addMessage, getMessage } = require("../controllers/message-controller");
@@ -42,15 +41,6 @@ const webSocket = (io) => io.on("connection", socket => {
     })
     socket.on("disconnect", data => {
         admin_id ? user_id ? disconnect(user_id, admin_id, io) : () => { } : () => { }
-    })
-const webSocket = (io) => io.on("connection", socket => {
-    socket.on('onConnect', data => {
-        io.sockets.emit('onConnect', {
-            userid: data.userid,
-            username: data.username,
-            admin_id: '',
-            admin_name: ''
-        })
     })
 });
 
