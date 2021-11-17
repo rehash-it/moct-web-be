@@ -21,6 +21,9 @@ const comment = new mongoose.Schema({
         type: String,
         required: true
     },
+    reply: Boolean,
+    reply_id: String,
+    files: [{ name: String, type: { type: String }, url: String }],
     created_at: {
         type: Date,
         default: Date.now

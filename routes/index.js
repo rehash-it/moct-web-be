@@ -15,11 +15,11 @@ const error = require("../middleware/error");
 const multer = require("multer");
 var bodyParser = require("body-parser");
 const check = require("../middleware/check");
-
 const path = require('path');
 const { getAdminConn } = require("../controllers/conn-controller");
 const { createForum, updateForum, deleteForum, getForums, getForum } = require("../controllers/forum-controller");
 const { getComments } = require("../controllers/comment-controller");
+const uploadFile = require("../controllers/upload-file-controller");
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -173,6 +173,10 @@ module.exports = function (app) {
   );
   /** check the user after login*/
   app.use('/api', router.post('/checkAdmin', [auth], check))
+  app.use('/api', router.get('/getTime', (req, res) => {
+    let time = Date.now()
+    res.send({ time })
+  }))
   /** */
   app.use(
     "/api",
@@ -344,13 +348,15 @@ module.exports = function (app) {
     router.post("/search/:index", asyncMiddleware(searchController.search))
   );
   //forum
+
   app.use('/api', router.get("/forum", asyncMiddleware(getForums)))
   app.use('/api', router.get("/forum/:id", asyncMiddleware(getForum)))
-  app.use('/api', router.post("/forum", [auth], asyncMiddleware(createForum)))
+  app.use('/api', router.post("/forum", [auth], upload.array('files', 30), asyncMiddleware(createForum)))
   app.use('/api', router.put("/forum/:id", [auth], asyncMiddleware(updateForum)))
   app.use('/api', router.delete('/forum/:id', [auth], asyncMiddleware(deleteForum)))
   //comments
   app.use('/api', router.get('/comment/:id', getComments))
+  app.use('/api', router.post('/fileupload', upload.array('files', 30), asyncMiddleware(uploadFile)))
 
   //chat connection
   app.use('/api', router.get('/connection/:admin_id', asyncMiddleware(getAdminConn)))

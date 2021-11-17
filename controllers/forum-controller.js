@@ -1,6 +1,7 @@
 const Forum = require('../models/forum')
 const Comment = require('../models/comment')
 const sendError = require('../utils/sendError')
+var baseURL = require("../constants");
 const getForums = async (req, res) => {
     try {
         const { status } = req.headers
@@ -26,7 +27,12 @@ const getForum = async (req, res) => {
 const createForum = async (req, res) => {
     try {
         const forum = req.body
-        const newForum = new Forum(forum)
+        const newForum = new Forum({
+            ...forum,
+            files: req.files ? req.files.length ? req.files.map(f => {
+                return { name: f.filename, url: baseURL.baseURL + "/uploads/" + f.filename, type: f.mimetype }
+            }) : [] : [],
+        })
         const save = await newForum.save()
         res.send(save)
     }

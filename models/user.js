@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    required: true,
     minlength: 5,
     maxlength: 1024
   },
@@ -30,7 +29,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: true,
   },
+  account_type: {
+    type: String,
 
+  },
   createdAt: {
     type: Date,
     default: Date.now

@@ -56,7 +56,7 @@ require('./routes/index')(app);
 const server = require("http").createServer(app)
 const io = socketIo(server, {
   cors: {
-    origin: ["http://192.168.8.101:3000", "http://localhost:3000"],
+    origin: ["http://192.168.8.101:3000", "http://localhost:3000", "http://localhost:3001", "http://192.168.8.101:3001"],
     methods: ["GET", "POST", "PUT"],
   },
 });

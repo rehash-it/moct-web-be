@@ -6,6 +6,7 @@ const { Vacancy } = require('../models/vacancy')
 const { matchString } = require('../utils/search')
 const { removeDuplicates } = require('../utils/array')
 const { checkDate } = require('../middleware/date')
+const { Archives } = require('../models/archive')
 const getPageData = (query, data) => {
     // api/search/index?p=1&limit=8
     const { p, limit: l } = query
@@ -23,7 +24,9 @@ const search = async (req, res) => {
     const documents = await Docs.find()
     const sites = await Site.find()
     const vacancy = await Vacancy.find()
+    const archive = await Archives.find()
     /**news */
+    const searchedArchives = Search(index, archive, ['title', 'from'])
     const searchedNews = Search(index, news, ['content', 'title'])
     let validNews = searchedNews.filter(n => {
         return checkDate(Date.now(), n.endDate)
@@ -63,6 +66,10 @@ const search = async (req, res) => {
         docs: {
             data: getPageData(query, searchedDoc),
             length: searchedDoc.length
+        },
+        archives: {
+            data: getPageData(query, searchedArchives),
+            length: searchedArchives.length
         }
     }
     res.send(result)

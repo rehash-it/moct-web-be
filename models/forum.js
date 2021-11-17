@@ -5,6 +5,10 @@ const forum = new mongoose.Schema({
         type: String,
         required: true,
     },
+    type: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true
@@ -22,6 +26,7 @@ const forum = new mongoose.Schema({
         required: true,
         default: 'live'  //'live' or closed
     },
+    files: [{ name: String, type: { type: String }, url: String }],
     closed_at: Date,
     created_at: {
         type: Date,

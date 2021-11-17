@@ -33,7 +33,7 @@ exports.updateDocs = async (req, res) => {
   const { error } = validateDocs(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const docs = await Docs.findByIdAndUpdate(
+  const docs =  await Docs.findByIdAndUpdate(
     req.params.id,
     {
       title: req.body.title,
