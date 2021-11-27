@@ -1,6 +1,6 @@
 const { now } = require("lodash");
 const { validateSite, Site } = require("../models/sites");
-const APIFeatures = require("./../utils/APIFeatures");
+const APIFeatures = require("../utils/APIFeatures");
 var baseURL = require("../constants");
 const deleteFile = require("../middleware/deleteFile");
 exports.getSites = async (req, res) => {

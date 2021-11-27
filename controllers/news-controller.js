@@ -1,6 +1,6 @@
 const { now } = require("lodash");
 const { News, validateNews } = require("../models/news");
-const APIFeatures = require("./../utils/APIFeatures");
+const APIFeatures = require("../utils/APIFeatures");
 var baseURL = require("../constants");
 const { checkDate } = require("../middleware/date");
 exports.getNews = async (req, res) => {

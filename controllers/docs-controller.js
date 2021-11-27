@@ -1,6 +1,6 @@
 const { now } = require("lodash");
 const { Docs, validateDocs } = require("../models/documents");
-const APIFeatures = require("./../utils/APIFeatures");
+const APIFeatures = require("../utils/APIFeatures");
 var baseURL = require("../constants");
 exports.getDocs = async (req, res) => {
   const apiFeatures = new APIFeatures(Docs.find({}), req.query)

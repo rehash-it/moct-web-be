@@ -1,6 +1,6 @@
 const { now } = require("lodash");
 const { Bid, validateBid } = require("../models/bids");
-const APIFeatures = require("./../utils/APIFeatures");
+const APIFeatures = require("../utils/APIFeatures");
 var baseURL = require("../constants");
 const { checkDate } = require("../middleware/date");
 exports.getBids = async (req, res) => {

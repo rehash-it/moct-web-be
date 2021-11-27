@@ -25,7 +25,7 @@ const archiveSchema = new mongoose.Schema({
     }
 });
 
-const Archives = mongoose.model('achives', archiveSchema);
+const Archives = mongoose.model('Archive', archiveSchema);
 
 function validateArchives(archives) {
     const schema = Joi.object({

@@ -20,6 +20,7 @@ const { getAdminConn } = require("../controllers/conn-controller");
 const { createForum, updateForum, deleteForum, getForums, getForum } = require("../controllers/forum-controller");
 const { getComments } = require("../controllers/comment-controller");
 const uploadFile = require("../controllers/upload-file-controller");
+const { saveFeed, getFeeds } = require("../controllers/archive-controllers");
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -357,7 +358,9 @@ module.exports = function (app) {
   //comments
   app.use('/api', router.get('/comment/:id', getComments))
   app.use('/api', router.post('/fileupload', upload.array('files', 30), asyncMiddleware(uploadFile)))
-
+  //archives
+  app.use('/api', router.get('/archives', getFeeds))
+  app.use('/api/', router.post('/archives', saveFeed))
   //chat connection
   app.use('/api', router.get('/connection/:admin_id', asyncMiddleware(getAdminConn)))
   app.use(express.static(path.join(__dirname, '../build')));
