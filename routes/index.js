@@ -172,7 +172,9 @@ module.exports = function (app) {
       asyncMiddleware(userController.updateUser)
     )
   );
-  /** check the user after login*/
+  /** check the user authentication*/
+  app.use('/api', router.post('/login', authController.signin))
+  app.use('/api', router.post('/signup', authController.signUp))
   app.use('/api', router.post('/checkAdmin', [auth], check))
   app.use('/api', router.get('/getTime', (req, res) => {
     let time = Date.now()

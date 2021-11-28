@@ -42,7 +42,6 @@ exports.signin = async (req, res) => {
   let user = await User.findOne({ username: req.body.username });
   let checkAccount = account_type ? (account_type === 'fb' || account_type === 'google') ? true : false : false
   if (!user && checkAccount) {
-    req.password = ""
     this.signUp(req, res)
   }
   else if (!user.isActive) {
@@ -67,8 +66,9 @@ exports.signUp = async (req, res) => {
     const { error } = validateUser(req.body);
     if (error) return sendError(error.details[0].message, res);
 
-    let user = await User.findOne({ email: req.body.email });
-    if (user) return sendError('User already registered.', res);
+    let user = await User.findOne({ username: req.body.username });
+    if (user) return sendError('User already registered plese login through ' + user.account_type, res);
+    if (req.body.account_type === 'fb' || req.body.account_type === 'google') { req.body.password = '' }
 
     user = new User(_.pick(req.body, ['username', 'password', 'isAdmin', 'isActive', 'account_type']));
     const salt = await bcrypt.genSalt(10);
@@ -92,6 +92,7 @@ function validateUser(user) {
     password: Joi.string().allow('').min(5).max(255),
     isAdmin: Joi.boolean().required(),
     isActive: Joi.boolean().required(),
+    account_type: Joi.string().allow('')
   });
   const validation = schema.validate(user);
   return validation;
