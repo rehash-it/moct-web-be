@@ -25,6 +25,7 @@ const getForum = async (req, res) => {
     }
 }
 const createForum = async (req, res) => {
+    console.log(req)
     try {
         const forum = req.body
         const newForum = new Forum({

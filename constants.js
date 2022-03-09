@@ -1,4 +1,4 @@
-const baseURL = "localhost:9000";
+const baseURL = "https://api.mocs.gov.et";
 
 module.exports = {
     baseURL: baseURL,
