@@ -57,7 +57,7 @@ const server = require("http").createServer(app)
 const io = socketIo(server, {
   cors: {
     // origin: ["http://192.168.8.101:3000", "http://localhost:3000", "http://localhost:3001", "http://192.168.8.101:3001"],
-    origin: ["https://moct.gov.et"],
+    origin: ["https://mocs.gov.et"],
 
     methods: ["GET", "POST", "PUT"],
   },
