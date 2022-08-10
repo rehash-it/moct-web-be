@@ -4,15 +4,15 @@ const APIFeatures = require("../utils/APIFeatures");
 var baseURL = require("../constants");
 const { checkDate } = require("../middleware/date");
 exports.getNews = async (req, res) => {
-  const { admin } = req.headers
-
+  const { admin } = req.headers;
+  const filter = !admin ? {endDate: {"$gte": Date.now()}}: {};
   //   const apiFeatures = new APIFeatures(News.find({"start_date": {"$gte": now(), "$lt": end_date}}), req.query)
-  const apiFeatures = new APIFeatures(News.find(), req.query)
+  const apiFeatures = new APIFeatures(News.find(filter), req.query)
     .filter()
     .sort()
     .limitFields()
     .paginate();
-  const docCount = await News.find().countDocuments(); /* NOTE: THIS WORKS!! */
+  const docCount = await News.find(filter).countDocuments(); /* NOTE: THIS WORKS!! */
   const news = await apiFeatures.query;
   let validNews = news.filter(n => {
     return checkDate(Date.now(), n.endDate)
