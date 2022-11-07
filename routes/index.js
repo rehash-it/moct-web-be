@@ -124,7 +124,7 @@ module.exports = function (app) {
     "/api",
     router.post(
       "/user",
-      // [auth, admin],
+      [auth, admin],
       asyncMiddleware(userController.createUser)
     )
   );
